@@ -1,9 +1,7 @@
 package input;
 
-import input.operand.BinaryOperator;
-import input.operand.Bracket;
+import input.operand.*;
 import input.operand.Number;
-import input.operand.Operand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +35,8 @@ public class InputModel {
                 case '/':
                     operands.add(BinaryOperator.DIVIDE);
                     break;
+                case 'x':
+                    operands.add(Variable.X);
             }
         }
         return operands;
