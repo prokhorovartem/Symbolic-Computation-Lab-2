@@ -11,9 +11,20 @@ public class InputModel {
 
     public static List<Operand> createModel(String expression) {
         char[] arrayOfOperands = expression.toCharArray();
-        for (char arrayOfOperand : arrayOfOperands) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < arrayOfOperands.length; i++) {
+            char arrayOfOperand = arrayOfOperands[i];
             if (Character.isDigit(arrayOfOperand)) {
-                operands.add(new Number((int) arrayOfOperand));
+                builder.append(arrayOfOperand);
+                if (i != arrayOfOperands.length - 1) {
+                    if (!Character.isDigit(arrayOfOperands[i + 1])) {
+                        operands.add(new Number(Integer.parseInt(builder.toString())));
+                        builder = new StringBuilder();
+                    }
+                } else {
+                    operands.add(new Number(Integer.parseInt(builder.toString())));
+                    builder = new StringBuilder();
+                }
                 continue;
             }
             switch (arrayOfOperand) {
