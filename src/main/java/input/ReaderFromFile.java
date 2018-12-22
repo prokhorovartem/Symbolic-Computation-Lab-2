@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ReaderFromFile {
-    public String readExpression() {
+    public static String readExpression() {
         File file = new File("input.tex");
         String integral = null;
         int startExpression = 11;
