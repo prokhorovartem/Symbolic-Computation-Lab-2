@@ -4,5 +4,6 @@ public enum BinaryOperator implements Operand {
     PLUS,
     MINUS,
     MULTIPLY,
-    DIVIDE
+    DIVIDE,
+    POWER
 }

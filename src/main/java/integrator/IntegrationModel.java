@@ -49,6 +49,6 @@ public class IntegrationModel {
         integratedOperands.add(BinaryOperator.MULTIPLY);
         integratedOperands.add(Variable.X);
         integratedOperands.add(BinaryOperator.DIVIDE);
-        integratedOperands.add(new Number(2));
+        integratedOperands.add(new Number(2.0));
     }
 }

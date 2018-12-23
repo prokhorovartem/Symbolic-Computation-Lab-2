@@ -1,13 +1,13 @@
 package input.operand;
 
 public class Number implements Operand {
-    private Integer number;
+    private Double number;
 
-    public Number(Integer number) {
+    public Number(Double number) {
         this.number = number;
     }
 
-    public Integer getNumber() {
+    public Double getNumber() {
         return number;
     }
 }
