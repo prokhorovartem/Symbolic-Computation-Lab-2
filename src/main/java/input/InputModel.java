@@ -1,12 +1,12 @@
 package input;
 
-import input.operand.*;
+import input.operand.BinaryOperator;
 import input.operand.Number;
+import input.operand.Operand;
+import input.operand.Variable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class InputModel {
     private static List<Operand> operands = new ArrayList<>();
@@ -30,12 +30,6 @@ public class InputModel {
                 continue;
             }
             switch (arrayOfOperand) {
-                case '(':
-                    operands.add(Bracket.OPEN);
-                    break;
-                case ')':
-                    operands.add(Bracket.CLOSE);
-                    break;
                 case '+':
                     operands.add(BinaryOperator.PLUS);
                     break;
@@ -52,30 +46,6 @@ public class InputModel {
                     operands.add(Variable.X);
             }
         }
-        return prioritizeOperands(operands);
-    }
-
-    private static List<Operand> prioritizedOperands = new ArrayList<>();
-    private static int counterForNewList = 0;
-
-    private static List<Operand> prioritizeOperands(List<Operand> operands) {
-        for (int i = 0; i < operands.size(); i++) {
-            if (operands.get(i) instanceof Bracket) {
-                if (Objects.equals(operands.get(i), Bracket.OPEN)) {
-                    for (int j = i; j < operands.size(); j++) {
-                        if (Objects.equals(operands.get(j), Bracket.CLOSE)) {
-                            List<Operand> sublist = operands.subList(i, j + 1);
-                            prioritizedOperands.addAll(sublist);
-                            operands.subList(i, j + 1).clear();
-                            if (prioritizedOperands.size() > counterForNewList){
-                                counterForNewList = prioritizedOperands.size();
-                                prioritizeOperands(prioritizedOperands);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return prioritizedOperands;
+        return operands;
     }
 }
