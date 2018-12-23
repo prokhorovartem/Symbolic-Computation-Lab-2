@@ -13,42 +13,41 @@ public class IntegrationModel {
     private static List<Operand> integratedOperands = new ArrayList<>();
 
     public static List<Operand> integrateExpression(List<Operand> operands) {
-        for (Operand operand : operands) {
-            if (operand instanceof Number) {
-                integrateConstants(operand);
-            }
-            if (operand instanceof BinaryOperator) {
-                integrateBinaryOperator(operand);
-            }
-            if (operand instanceof Variable) {
-                integrateVariable(operand);
+        for (int i = 2; i < operands.size(); i++) {
+            if (Objects.equals(operands.get(i), BinaryOperator.PLUS) || Objects.equals(operands.get(i), BinaryOperator.MINUS)) {
+                if (operands.get(i - 2) instanceof Number) {
+                    integrateNumber(operands.get(i - 2));
+                }
+                if (operands.get(i - 2) instanceof Variable) {
+                    integrateVariable(operands.get(i - 2), 1);
+                }
+                if (Objects.equals(operands.get(i), BinaryOperator.PLUS)){
+                    integratedOperands.add(BinaryOperator.PLUS);
+                } else integratedOperands.add(BinaryOperator.MINUS);
+                if (operands.get(i - 1) instanceof Number) {
+                    integrateNumber(operands.get(i - 1));
+                }
+                if (operands.get(i - 1) instanceof Variable) {
+                    integrateNumber(operands.get(i - 1));
+                }
             }
         }
         return integratedOperands;
     }
 
-    private static void integrateConstants(Operand operand) {
+    private static void integrateVariable(Operand operand, double power) {
+        for (int i = 0; i < power; i++){
+            integratedOperands.add(operand);
+            integratedOperands.add(BinaryOperator.MULTIPLY);
+        }
+        integratedOperands.add(operand);
+        integratedOperands.add(BinaryOperator.DIVIDE);
+        integratedOperands.add(new Number(power + 1));
+    }
+
+    private static void integrateNumber(Operand operand) {
         integratedOperands.add(operand);
         integratedOperands.add(BinaryOperator.MULTIPLY);
         integratedOperands.add(Variable.X);
-    }
-
-    private static void integrateBinaryOperator(Operand operand) {
-        if (Objects.equals(operand, BinaryOperator.PLUS))
-            integratedOperands.add(BinaryOperator.PLUS);
-        if (Objects.equals(operand, BinaryOperator.MINUS))
-            integratedOperands.add(BinaryOperator.MINUS);
-        if (Objects.equals(operand, BinaryOperator.MULTIPLY))
-            integratedOperands.add(BinaryOperator.MULTIPLY);
-        if (Objects.equals(operand, BinaryOperator.DIVIDE))
-            integratedOperands.add(BinaryOperator.DIVIDE);
-    }
-
-    private static void integrateVariable(Operand operand) {
-        integratedOperands.add(Variable.X);
-        integratedOperands.add(BinaryOperator.MULTIPLY);
-        integratedOperands.add(Variable.X);
-        integratedOperands.add(BinaryOperator.DIVIDE);
-        integratedOperands.add(new Number(2.0));
     }
 }

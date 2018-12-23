@@ -3,6 +3,7 @@ package integrator;
 import input.operand.BinaryOperator;
 import input.operand.Number;
 import input.operand.Operand;
+import input.operand.Variable;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +11,7 @@ import java.util.Objects;
 public class AriphmeticModel {
     public static List<Operand> reduceModel(List<Operand> operands) {
         for (int i = 0; i < operands.size(); i++) {
-            if (!(operands.get(i) instanceof Number)) {
+            if (!(operands.get(i) instanceof Number) && !(operands.get(i) instanceof Variable)) {
                 if (operands.get(i - 2) instanceof Number && operands.get(i - 1) instanceof Number) {
                     double acc = 0;
                     if (Objects.equals(operands.get(i), BinaryOperator.PLUS)) {
@@ -37,6 +38,6 @@ public class AriphmeticModel {
                 }
             }
         }
-        return operands;
+        return IntegrationModel.integrateExpression(operands);
     }
 }
