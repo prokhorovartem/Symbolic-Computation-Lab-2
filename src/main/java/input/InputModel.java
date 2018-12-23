@@ -12,7 +12,8 @@ public class InputModel {
 
     private static List<Operand> operands = new ArrayList<>();
 
-    public static List<Operand> createModel(String expression) {
+    public static List<Operand> createModel() {
+        String expression = ReaderFromFile.readExpression();
         String expressionInPolandNotation = InputModel.reversePolandNotation(expression);
         char[] arrayOfOperands = expressionInPolandNotation.toCharArray();
         StringBuilder builder = new StringBuilder();
@@ -52,7 +53,6 @@ public class InputModel {
                     break;
             }
         }
-        System.out.println(operands);
         return operands;
     }
 

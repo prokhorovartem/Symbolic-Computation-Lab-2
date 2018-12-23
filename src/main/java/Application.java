@@ -1,9 +1,13 @@
-import input.InputModel;
-import input.ReaderFromFile;
-import integrator.AriphmeticModel;
+import input.operand.Operand;
+import integrator.IntegrationModel;
+import output.WriterInFile;
+
+import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
-        System.out.println(AriphmeticModel.reduceModel(InputModel.createModel(ReaderFromFile.readExpression())));
+        List<Operand> operands = IntegrationModel.integrateExpression();
+        System.out.println(operands);
+        WriterInFile.writeResult(operands);
     }
 }

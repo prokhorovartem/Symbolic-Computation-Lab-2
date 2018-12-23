@@ -1,5 +1,6 @@
 package integrator;
 
+import input.InputModel;
 import input.operand.BinaryOperator;
 import input.operand.Number;
 import input.operand.Operand;
@@ -12,7 +13,8 @@ import java.util.Objects;
 public class IntegrationModel {
     private static List<Operand> integratedOperands = new ArrayList<>();
 
-    public static List<Operand> integrateExpression(List<Operand> operands) {
+    public static List<Operand> integrateExpression() {
+        List<Operand> operands = AriphmeticModel.reduceModel(InputModel.createModel());
         for (int i = 2; i < operands.size(); i++) {
             if (Objects.equals(operands.get(i), BinaryOperator.PLUS) || Objects.equals(operands.get(i), BinaryOperator.MINUS)) {
                 if (operands.get(i - 2) instanceof Number) {
