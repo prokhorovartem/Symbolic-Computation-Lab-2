@@ -13,23 +13,21 @@ public class WriterInFile {
     public static void writeResult(List<Operand> operands) {
         try (FileWriter writer = new FileWriter("output.xml", false)) {
             writer.write("<ANSWER>\n");
-            for (int i = 0; i < operands.size(); i++) {
-                if (operands.get(i) instanceof BinaryOperator) {
-                    writer.write("<" + ((BinaryOperator) operands.get(i)).name() + "/>\n");
-//                    writer.write("</" + ((BinaryOperator) operands.get(i)).name() + ">\n");
+            for (Operand operand : operands) {
+                if (operand instanceof BinaryOperator) {
+                    writer.write("<" + ((BinaryOperator) operand).name() + "/>\n");
                 }
-                if (operands.get(i) instanceof Variable) {
+                if (operand instanceof Variable) {
                     writer.write("\t<VARIABLE>");
-                    writer.write(((Variable) operands.get(i)).name());
+                    writer.write(((Variable) operand).name());
                     writer.write("</VARIABLE>\n");
                 }
-                if (operands.get(i) instanceof Number) {
+                if (operand instanceof Number) {
                     writer.write("\t<NUMBER>");
-                    writer.write(((Number) operands.get(i)).getNumber().toString());
+                    writer.write(((Number) operand).getNumber().toString());
                     writer.write("</NUMBER>\n");
                 }
             }
-//            writer.write(String.valueOf(Integral.result * Integral.sign));
             writer.write("</ANSWER>");
         } catch (IOException e) {
             System.out.println("Ошибка записи в файл");

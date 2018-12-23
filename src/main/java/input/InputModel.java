@@ -57,7 +57,7 @@ public class InputModel {
     }
 
     public static String reversePolandNotation(String expression) {
-        StringBuilder sbStack = new StringBuilder(""), sbOut = new StringBuilder("");
+        StringBuilder sbStack = new StringBuilder(), sbOut = new StringBuilder();
         char cIn, cTmp;
 
         for (int i = 0; i < expression.length(); i++) {
