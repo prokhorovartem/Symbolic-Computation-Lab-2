@@ -1,12 +1,16 @@
-import input.operand.Operand;
-import integrator.IntegrationModel;
-import output.WriterInFile;
-
-import java.util.List;
+import model.InputModel;
+import object.Resource;
 
 public class Application {
     public static void main(String[] args) {
-        List<Operand> operands = IntegrationModel.integrateExpression();
-        WriterInFile.writeResult(operands);
+        Resource inputResource = new Resource("input.tex");
+
+        InputModel inputModel;
+        try {
+            inputModel = new InputModel(inputResource);
+            inputModel.parse();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package input.operand;
+package object;
 
 public interface Operand {
 }

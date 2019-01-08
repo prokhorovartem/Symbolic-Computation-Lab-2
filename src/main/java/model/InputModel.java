@@ -1,62 +1,39 @@
-package input;
+package model;
 
-import input.operand.BinaryOperator;
-import input.operand.Number;
-import input.operand.Operand;
-import input.operand.Variable;
+import object.Expression;
+import object.Number;
+import object.Operation;
+import object.Resource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class InputModel {
+    private Resource resource;
 
-    private static List<Operand> operands = new ArrayList<>();
-
-    public static List<Operand> createModel() {
-        String expression = ReaderFromFile.readExpression();
-        String expressionInPolandNotation = InputModel.reversePolandNotation(expression);
-        char[] arrayOfOperands = expressionInPolandNotation.toCharArray();
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < arrayOfOperands.length; i++) {
-            char arrayOfOperand = arrayOfOperands[i];
-            if (Character.isDigit(arrayOfOperand)) {
-                builder.append(arrayOfOperand);
-                if (i != arrayOfOperands.length - 1) {
-                    if (!Character.isDigit(arrayOfOperands[i + 1])) {
-                        operands.add(new Number(Double.parseDouble(builder.toString())));
-                        builder = new StringBuilder();
-                    }
-                } else {
-                    operands.add(new Number(Double.parseDouble(builder.toString())));
-                    builder = new StringBuilder();
-                }
-                continue;
-            }
-            switch (arrayOfOperand) {
-                case '+':
-                    operands.add(BinaryOperator.PLUS);
-                    break;
-                case '-':
-                    operands.add(BinaryOperator.MINUS);
-                    break;
-                case '*':
-                    operands.add(BinaryOperator.MULTIPLY);
-                    break;
-                case '/':
-                    operands.add(BinaryOperator.DIVIDE);
-                    break;
-                case '^':
-                    operands.add(BinaryOperator.POWER);
-                    break;
-                case 'x':
-                    operands.add(Variable.X);
-                    break;
-            }
-        }
-        return operands;
+    public InputModel(Resource resource) {
+        this.resource = resource;
     }
 
-    public static String reversePolandNotation(String expression) {
+    public void parse() {
+        String integral = null;
+        int startExpression = 11;
+        String endExpression = "\\,dx\\]";
+        try (Scanner sc = new Scanner(resource.getFile())) {
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                if (line.contains("\\[\\int")) {
+                    integral = line.substring(startExpression, line.indexOf(endExpression)).replaceAll(" ", "");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Файла не существует!");
+        }
+        assert integral != null;
+        Expression expression = getExpressionFromString(reversePolandNotation(integral));
+    }
+
+    private static String reversePolandNotation(String expression) {
         StringBuilder sbStack = new StringBuilder(), sbOut = new StringBuilder();
         char cIn, cTmp;
 
@@ -104,7 +81,7 @@ public class InputModel {
             sbStack.setLength(sbStack.length() - 1);
         }
 
-        return sbOut.toString();
+        return sbOut.toString().replaceAll(" ", "");
     }
 
     private static byte operationPriority(char operation) {
@@ -129,4 +106,32 @@ public class InputModel {
         }
         return false;
     }
+
+    private Expression getExpressionFromString(String reversedNotation) {
+        StringBuilder sb = new StringBuilder(reversedNotation);
+        Expression expression = new Expression(new Number(Double.parseDouble(String.valueOf(sb.charAt(0)))), null, null);
+        for (int i = 2; i < sb.length(); i++) {
+            if (!Character.isDigit(sb.charAt(i))) {
+                Operation operation = null;
+                switch (sb.charAt(i)) {
+                    case '+':
+                        operation = Operation.ADD;
+                        break;
+                    case '-':
+                        operation = Operation.SUB;
+                        break;
+                    case '*':
+                        operation = Operation.MUL;
+                        break;
+                    case '/':
+                        operation = Operation.DIV;
+                        break;
+                }
+                expression = new Expression(expression,
+                        new Number(Double.parseDouble(String.valueOf(sb.charAt(i - 1)))), operation);
+            }
+        }
+        return expression;
+    }
+
 }
