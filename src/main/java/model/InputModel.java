@@ -1,9 +1,7 @@
 package model;
 
-import object.Expression;
+import object.*;
 import object.Number;
-import object.Operation;
-import object.Resource;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -97,8 +95,8 @@ public class InputModel {
 
     private static boolean isOperation(char c) {
         switch (c) {
-            case '-':
             case '+':
+            case '-':
             case '*':
             case '/':
             case '^':
@@ -109,9 +107,12 @@ public class InputModel {
 
     private Expression getExpressionFromString(String reversedNotation) {
         StringBuilder sb = new StringBuilder(reversedNotation);
-        Expression expression = new Expression(new Number(Double.parseDouble(String.valueOf(sb.charAt(0)))), null, null);
-        for (int i = 2; i < sb.length(); i++) {
+        boolean firstTime = true;
+        Expression expression = null;
+        for (int i = 0; i < sb.length(); i++) {
             if (!Character.isDigit(sb.charAt(i))) {
+                if (firstTime)
+                    expression = new Expression(getOperandType(sb.charAt(i - 2)), null, null);
                 Operation operation = null;
                 switch (sb.charAt(i)) {
                     case '+':
@@ -126,12 +127,27 @@ public class InputModel {
                     case '/':
                         operation = Operation.DIV;
                         break;
+                    case '^':
+                        operation = Operation.POW;
+                        break;
                 }
                 expression = new Expression(expression,
-                        new Number(Double.parseDouble(String.valueOf(sb.charAt(i - 1)))), operation);
+                        getOperandType(sb.charAt(i - 1)), operation);
+                if (firstTime)
+                    sb.delete(i - 2, i + 1);
+                else sb.delete(i - 1, i + 1);
+                firstTime = false;
+                i = 0;
             }
         }
         return expression;
     }
 
+    private Operand getOperandType(char charOperand) {
+        Operand operand = null;
+        if (Character.isDigit(charOperand)) {
+            operand = new Number(Double.parseDouble(String.valueOf(charOperand)));
+        } else if (charOperand == 'x') operand = Variable.X;
+        return operand;
+    }
 }
