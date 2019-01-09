@@ -4,7 +4,7 @@ import object.*;
 import object.Number;
 
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.*;
 
 public class InputModel {
     private Resource resource;
@@ -44,7 +44,7 @@ public class InputModel {
                         sbOut.append(" ").append(cTmp).append(" ");
                         sbStack.setLength(sbStack.length() - 1);
                     } else {
-                        sbOut.append(" ");
+//                        sbOut.append(" ");
                         break;
                     }
                 }
@@ -79,7 +79,7 @@ public class InputModel {
             sbStack.setLength(sbStack.length() - 1);
         }
 
-        return sbOut.toString().replaceAll(" ", "");
+        return sbOut.toString();
     }
 
     private static byte operationPriority(char operation) {
@@ -106,48 +106,55 @@ public class InputModel {
     }
 
     private Expression getExpressionFromString(String reversedNotation) {
-        StringBuilder sb = new StringBuilder(reversedNotation);
+        List<String> listOfOperands = new LinkedList<>(Arrays.asList(reversedNotation.split(" ")));
         boolean firstTime = true;
+        String sTmp;
         Expression expression = null;
-        for (int i = 0; i < sb.length(); i++) {
-            if (!Character.isDigit(sb.charAt(i))) {
-                if (firstTime)
-                    expression = new Expression(getOperandType(sb.charAt(i - 2)), null, null);
-                Operation operation = null;
-                switch (sb.charAt(i)) {
-                    case '+':
-                        operation = Operation.ADD;
-                        break;
-                    case '-':
-                        operation = Operation.SUB;
-                        break;
-                    case '*':
-                        operation = Operation.MUL;
-                        break;
-                    case '/':
-                        operation = Operation.DIV;
-                        break;
-                    case '^':
-                        operation = Operation.POW;
-                        break;
+        for (int i = 0; i < listOfOperands.size(); i++) {
+            try {
+                sTmp = listOfOperands.get(i).trim();
+                if (1 == sTmp.length() && isOperation(sTmp.charAt(0))) {
+                    if (firstTime)
+                        expression = new Expression(getOperandType(listOfOperands.get(i - 2)), null, null);
+                    Operation operation = null;
+                    switch (sTmp.charAt(0)) {
+                        case '+':
+                            operation = Operation.ADD;
+                            break;
+                        case '-':
+                            operation = Operation.SUB;
+                            break;
+                        case '*':
+                            operation = Operation.MUL;
+                            break;
+                        case '/':
+                            operation = Operation.DIV;
+                            break;
+                        case '^':
+                            operation = Operation.POW;
+                            break;
+                    }
+                    expression = new Expression(expression,
+                            getOperandType(listOfOperands.get(i - 1)), operation);
+                    if (firstTime) {
+                        listOfOperands.remove(i - 2);
+                        listOfOperands.remove(i - 2);
+                        listOfOperands.remove(i - 2);
+                    } else {
+                        listOfOperands.remove(i - 1);
+                        listOfOperands.remove(i - 1);
+                    }
+                    firstTime = false;
+                    i = 0;
                 }
-                expression = new Expression(expression,
-                        getOperandType(sb.charAt(i - 1)), operation);
-                if (firstTime)
-                    sb.delete(i - 2, i + 1);
-                else sb.delete(i - 1, i + 1);
-                firstTime = false;
-                i = 0;
+            } catch (Exception e) {
+                System.out.println("Недопустимый символ в выражении");
             }
         }
         return expression;
     }
 
-    private Operand getOperandType(char charOperand) {
-        Operand operand = null;
-        if (Character.isDigit(charOperand)) {
-            operand = new Number(Double.parseDouble(String.valueOf(charOperand)));
-        } else if (charOperand == 'x') operand = Variable.X;
-        return operand;
+    private Operand getOperandType(String charOperand) {
+        return (charOperand.equals("x")) ? Variable.X : new Number(Double.parseDouble(charOperand));
     }
 }
