@@ -1,6 +1,8 @@
 package symbolic.model;
 
-public enum OperationType {
+import symbolic.visitor.Visitor;
+
+public enum OperationType implements Expression{
     ADDITION,
     SUBTRACTION,
     DIVISION,
@@ -9,6 +11,18 @@ public enum OperationType {
     INT,
     SIN,
     COS,
-    TG,
-    CTG
+    TAN,
+    CTG,
+    OPENING_BRACKET,
+    CLOSING_BRACKET;
+
+    @Override
+    public Expression accept(Visitor visitor) {
+        return null;
+    }
+
+    @Override
+    public boolean isOperation() {
+        return true;
+    }
 }

@@ -1,5 +1,7 @@
+import model.Converter;
 import model.InputModel;
-import object.Resource;
+import model.Resource;
+import symbolic.model.Expression;
 import symbolic.model.Operation;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
@@ -8,6 +10,7 @@ import symbolic.visitor.Visitor;
 import symbolic.visitor.impl.VisitorImpl;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
@@ -26,7 +29,10 @@ public class Application {
 
         try {
             inputModel = new InputModel(inputResource);
-            inputModel.parse();
+            List inputData = inputModel.parse();
+            Converter converter = new Converter();
+            Expression expression = converter.convert(inputData);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

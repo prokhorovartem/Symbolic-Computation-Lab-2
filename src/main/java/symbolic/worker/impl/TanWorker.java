@@ -2,8 +2,8 @@ package symbolic.worker.impl;
 
 import symbolic.model.Expression;
 
-public class TgWorker extends AbstractWorker {
-    public TgWorker(Expression firstArgument) {
+public class TanWorker extends AbstractWorker {
+    public TanWorker(Expression firstArgument) {
         super(firstArgument);
     }
 

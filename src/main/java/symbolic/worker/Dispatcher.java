@@ -20,8 +20,8 @@ public class Dispatcher {
             case COS:
                 worker = new CosWorker(firstArgument);
                 break;
-            case TG:
-                worker = new TgWorker(firstArgument);
+            case TAN:
+                worker = new TanWorker(firstArgument);
                 break;
             case CTG:
                 worker = new CtgWorker(firstArgument);
