@@ -1,9 +1,6 @@
 package input;
 
-import symbolic.model.Expression;
-import symbolic.visitor.Visitor;
-
-public enum BinaryOperation implements Expression {
+public enum BinaryOperation implements InputExpression {
     ADDITION,
     SUBTRACTION,
     DIVISION,
@@ -11,17 +8,8 @@ public enum BinaryOperation implements Expression {
     POW;
 
     @Override
-    public Expression accept(Visitor visitor) {
-        return null;
-    }
-
-    @Override
     public void accept(ArgumentConvertVisitor visitor) {
         visitor.visit(this);
     }
 
-    @Override
-    public boolean isOperation() {
-        return true;
-    }
 }

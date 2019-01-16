@@ -2,7 +2,7 @@ package symbolic.model;
 
 public interface Operation extends Expression {
 
-    Expression getOperationType();
+    OperationType getOperationType();
 
     Expression getFirstArgument();
 

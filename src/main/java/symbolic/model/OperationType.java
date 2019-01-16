@@ -1,9 +1,6 @@
 package symbolic.model;
 
-import input.ArgumentConvertVisitor;
-import symbolic.visitor.Visitor;
-
-public enum OperationType implements Expression{
+public enum OperationType {
     ADDITION,
     SUBTRACTION,
     DIVISION,
@@ -17,18 +14,4 @@ public enum OperationType implements Expression{
     OPENING_BRACKET,
     CLOSING_BRACKET;
 
-    @Override
-    public Expression accept(Visitor visitor) {
-        return null;
-    }
-
-    @Override
-    public void accept(ArgumentConvertVisitor visitor) {
-
-    }
-
-    @Override
-    public boolean isOperation() {
-        return true;
-    }
 }

@@ -1,10 +1,6 @@
 package input;
 
-import symbolic.model.Expression;
-import symbolic.model.Operation;
 import symbolic.model.OperationType;
-import symbolic.model.impl.OperationImpl;
-import symbolic.model.impl.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +12,8 @@ public class Converter {
      * @param inputData
      * @return
      */
-    public Expression convert(List<Expression> inputData) {
-        List<Expression> reversedExpression = reverseNotation(inputData);
+    public InputExpression convert(List<InputExpression> inputData) {
+        List<InputExpression> reversedExpression = reverseNotation(inputData);
         for (int i = 0; i < reversedExpression.size(); i++) {
             if (!(reversedExpression.get(i) instanceof BinaryOperation
                     || reversedExpression.get(i) instanceof UnaryOperation
@@ -36,10 +32,10 @@ public class Converter {
      * @param inputData лист с типами
      * @return
      */
-    private List<Expression> reverseNotation(List<Expression> inputData) {
-        Expression currentExpression, tempExpression, unaryExpression = null;
-        List<Expression> expressionStack = new ArrayList<>(), expressionsOut = new ArrayList<>();
-        for (Expression data : inputData) {
+    private List<InputExpression> reverseNotation(List<InputExpression> inputData) {
+        InputExpression currentExpression, tempExpression, unaryExpression = null;
+        List<InputExpression> expressionStack = new ArrayList<>(), expressionsOut = new ArrayList<>();
+        for (InputExpression data : inputData) {
             currentExpression = data;
             if (currentExpression instanceof UnaryOperation) {
                 unaryExpression = currentExpression;
@@ -85,7 +81,7 @@ public class Converter {
         return expressionsOut;
     }
 
-    private byte binaryOperationPriority(Expression currentExpression) {
+    private byte binaryOperationPriority(InputExpression currentExpression) {
         if (currentExpression == BinaryOperation.POW)
             return 3;
         if (currentExpression == BinaryOperation.MULTIPLICATION
@@ -94,8 +90,8 @@ public class Converter {
         return 1;
     }
 
-    private boolean isBinaryOperation(Expression currentExpression) {
+    private boolean isBinaryOperation(InputExpression currentExpression) {
         return currentExpression instanceof BinaryOperation
-                && currentExpression != OperationType.INT;
+                && currentExpression != UnaryOperation.INT;
     }
 }

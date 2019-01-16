@@ -15,7 +15,7 @@ import symbolic.visitor.Visitor;
 @AllArgsConstructor
 public class OperationImpl implements Operation {
     @NonNull
-    private Expression operationType;
+    private OperationType operationType;
     @NonNull
     private Expression firstArgument;
     private Expression secondArgument;
@@ -23,10 +23,5 @@ public class OperationImpl implements Operation {
     @Override
     public Expression accept(Visitor visitor) {
         return visitor.visit(this);
-    }
-
-    @Override
-    public void accept(ArgumentConvertVisitor visitor) {
-
     }
 }
