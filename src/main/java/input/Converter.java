@@ -4,6 +4,7 @@ import symbolic.model.Expression;
 import symbolic.model.Operation;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
+import symbolic.model.impl.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,44 +19,15 @@ public class Converter {
     public Expression convert(List<Expression> inputData) {
         List<Expression> reversedExpression = reverseNotation(inputData);
         for (int i = 0; i < reversedExpression.size(); i++) {
-            if (reversedExpression.get(i) == OperationType.INT)
+            if (!(reversedExpression.get(i) instanceof BinaryOperation
+                    || reversedExpression.get(i) instanceof UnaryOperation
+                    || reversedExpression.get(i) instanceof Bracket))
                 continue;
-            if (reversedExpression.get(i) == OperationType.OPENING_BRACKET) {
-                reversedExpression.remove(i);
-                i = 1;
-                continue;
-            }
-            if (reversedExpression.get(i) == OperationType.CLOSING_BRACKET) {
-                reversedExpression.remove(i);
-                i = 1;
-                continue;
-            }
-            if (isBinaryOperation(reversedExpression.get(i))) {
-                Operation operation = OperationImpl.builder()
-                        .firstArgument(reversedExpression.get(i - 2))
-                        .operationType((OperationType) reversedExpression.get(i))
-                        .secondArgument(reversedExpression.get(i - 1))
-                        .build();
-                //вставляем новую операцию вместо трех старых
-                reversedExpression.remove(i - 2);
-                reversedExpression.remove(i - 2);
-                reversedExpression.set(i - 2, operation);
-                i = 1;
-                continue;
-            }
-            if (isUnaryOperation(reversedExpression.get(i))) {
-                Operation operation = OperationImpl.builder()
-                        .firstArgument(reversedExpression.get(i - 1))
-                        .operationType((OperationType) reversedExpression.get(i))
-                        .build();
-                //вставляем новую операцию вместо двух старых
-                reversedExpression.remove(i - 1);
-                reversedExpression.set(i - 1, operation);
-                i = 1;
-            }
+            ArgumentConvertVisitor visitor = new ArgumentConvertVisitorImpl(reversedExpression, i);
+            reversedExpression.get(i).accept(visitor);
+            i = 0;
         }
-
-        return reversedExpression.get(1);
+        return reversedExpression.get(0);
     }
 
     /**
@@ -69,7 +41,7 @@ public class Converter {
         List<Expression> expressionStack = new ArrayList<>(), expressionsOut = new ArrayList<>();
         for (Expression data : inputData) {
             currentExpression = data;
-            if (isUnaryOperation(currentExpression)) {
+            if (currentExpression instanceof UnaryOperation) {
                 unaryExpression = currentExpression;
             } else if (isBinaryOperation(currentExpression)) {
                 while (expressionStack.size() > 0) {
@@ -81,12 +53,12 @@ public class Converter {
                     } else break;
                 }
                 expressionStack.add(currentExpression);
-            } else if (currentExpression == OperationType.OPENING_BRACKET) {
+            } else if (currentExpression == Bracket.OPENING_BRACKET) {
                 expressionStack.add(currentExpression);
                 expressionsOut.add(currentExpression);
-            } else if (currentExpression == OperationType.CLOSING_BRACKET) {
+            } else if (currentExpression == Bracket.CLOSING_BRACKET) {
                 tempExpression = expressionStack.get(expressionStack.size() - 1);
-                while (tempExpression != OperationType.OPENING_BRACKET) {
+                while (tempExpression != Bracket.OPENING_BRACKET) {
                     if (expressionStack.size() < 1) {
                         try {
                             throw new Exception("Ошибка разбора скобок");
@@ -113,27 +85,17 @@ public class Converter {
         return expressionsOut;
     }
 
-    private boolean isUnaryOperation(Expression currentExpression) {
-        return currentExpression == OperationType.SIN
-                || currentExpression == OperationType.COS
-                || currentExpression == OperationType.TAN
-                || currentExpression == OperationType.CTG;
-    }
-
     private byte binaryOperationPriority(Expression currentExpression) {
-        if (currentExpression == OperationType.POW)
+        if (currentExpression == BinaryOperation.POW)
             return 3;
-        if (currentExpression == OperationType.MULTIPLICATION
-                || currentExpression == OperationType.DIVISION)
+        if (currentExpression == BinaryOperation.MULTIPLICATION
+                || currentExpression == BinaryOperation.DIVISION)
             return 2;
         return 1;
     }
 
     private boolean isBinaryOperation(Expression currentExpression) {
-        return currentExpression instanceof OperationType
-                && currentExpression != OperationType.INT
-                && currentExpression != OperationType.OPENING_BRACKET
-                && currentExpression != OperationType.CLOSING_BRACKET
-                && !isUnaryOperation(currentExpression);
+        return currentExpression instanceof BinaryOperation
+                && currentExpression != OperationType.INT;
     }
 }

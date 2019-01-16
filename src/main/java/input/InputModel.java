@@ -1,7 +1,6 @@
 package input;
 
 import symbolic.model.Expression;
-import symbolic.model.OperationType;
 import symbolic.model.impl.Variable;
 
 import java.io.FileNotFoundException;
@@ -65,15 +64,15 @@ public class InputModel {
             }
             if (word.matches("[-+*/^]")) {
                 if (word.equals("+"))
-                    expressions.add(OperationType.ADDITION);
+                    expressions.add(BinaryOperation.ADDITION);
                 if (word.equals("-"))
-                    expressions.add(OperationType.SUBTRACTION);
+                    expressions.add(BinaryOperation.SUBTRACTION);
                 if (word.equals("*"))
-                    expressions.add(OperationType.MULTIPLICATION);
+                    expressions.add(BinaryOperation.MULTIPLICATION);
                 if (word.equals("/"))
-                    expressions.add(OperationType.DIVISION);
+                    expressions.add(BinaryOperation.DIVISION);
                 if (word.equals("^"))
-                    expressions.add(OperationType.POW);
+                    expressions.add(BinaryOperation.POW);
                 continue;
             }
             if (word.equals("x")) {
@@ -81,15 +80,15 @@ public class InputModel {
                 continue;
             }
             if (word.equals("(")) {
-                expressions.add(OperationType.OPENING_BRACKET);
+                expressions.add(Bracket.OPENING_BRACKET);
                 continue;
             }
             if (word.equals(")")) {
-                expressions.add(OperationType.CLOSING_BRACKET);
+                expressions.add(Bracket.CLOSING_BRACKET);
                 continue;
             }
             if (word.matches("[\\w]+"))
-                expressions.add(OperationType.valueOf(word.toUpperCase()));
+                expressions.add(UnaryOperation.valueOf(word.toUpperCase()));
         }
         return expressions;
     }

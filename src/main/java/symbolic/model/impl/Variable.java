@@ -1,5 +1,6 @@
 package symbolic.model.impl;
 
+import input.ArgumentConvertVisitor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,11 @@ public class Variable implements Expression {
     @Override
     public Expression accept(Visitor visitor) {
         return visitor.visit(this);
+    }
+
+    @Override
+    public void accept(ArgumentConvertVisitor visitor) {
+
     }
 
     @Override

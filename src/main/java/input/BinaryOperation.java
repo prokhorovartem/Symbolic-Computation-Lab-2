@@ -1,21 +1,14 @@
-package symbolic.model;
+package input;
 
-import input.ArgumentConvertVisitor;
+import symbolic.model.Expression;
 import symbolic.visitor.Visitor;
 
-public enum OperationType implements Expression{
+public enum BinaryOperation implements Expression {
     ADDITION,
     SUBTRACTION,
     DIVISION,
     MULTIPLICATION,
-    POW,
-    INT,
-    SIN,
-    COS,
-    TAN,
-    CTG,
-    OPENING_BRACKET,
-    CLOSING_BRACKET;
+    POW;
 
     @Override
     public Expression accept(Visitor visitor) {
@@ -24,7 +17,7 @@ public enum OperationType implements Expression{
 
     @Override
     public void accept(ArgumentConvertVisitor visitor) {
-
+        visitor.visit(this);
     }
 
     @Override
