@@ -27,9 +27,4 @@ public class OperationImpl implements Operation {
     public void accept(ArgumentConvertVisitor visitor) {
 
     }
-
-    @Override
-    public boolean isOperation() {
-        return true;
-    }
 }

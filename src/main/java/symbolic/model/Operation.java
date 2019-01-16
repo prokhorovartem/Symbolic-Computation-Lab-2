@@ -7,4 +7,9 @@ public interface Operation extends Expression {
     Expression getFirstArgument();
 
     Expression getSecondArgument();
+
+    @Override
+    default boolean isOperation() {
+        return true;
+    }
 }

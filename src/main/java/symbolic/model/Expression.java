@@ -9,5 +9,7 @@ public interface Expression {
 
     void accept(ArgumentConvertVisitor visitor);
 
-    boolean isOperation();
+    default boolean isOperation() {
+        return false;
+    }
 }
