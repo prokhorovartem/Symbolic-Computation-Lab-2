@@ -1,4 +1,4 @@
-package model;
+package input;
 
 import symbolic.model.Expression;
 import symbolic.model.OperationType;
@@ -20,7 +20,7 @@ public class InputModel {
         this.resource = resource;
     }
 
-    public List parse() {
+    public List<Expression> parse() {
         String integral = null;
         try (Scanner sc = new Scanner(resource.getFile())) {
             while (sc.hasNextLine()) {
@@ -45,7 +45,7 @@ public class InputModel {
         return createListOfOperationsAndOperands(integral);
     }
 
-    private List createListOfOperationsAndOperands(String integral) {
+    private List<Expression> createListOfOperationsAndOperands(String integral) {
         Pattern pattern = Pattern.compile("[\\d]+|[-+*/^]|[\\w]+|[()]");
         Matcher matcher = pattern.matcher(integral);
         List<String> words = new ArrayList<>();
@@ -56,7 +56,7 @@ public class InputModel {
 
     }
 
-    private List convertStringToExpression(List<String> words) {
+    private List<Expression> convertStringToExpression(List<String> words) {
         List<Expression> expressions = new ArrayList<>();
         for (String word : words) {
             if (word.matches("[\\d]+")) {

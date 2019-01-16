@@ -1,17 +1,69 @@
-package model;
+package input;
 
 import symbolic.model.Expression;
+import symbolic.model.Operation;
 import symbolic.model.OperationType;
+import symbolic.model.impl.OperationImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Converter {
+    /**
+     * Конвертирует лист типов в одно выражение типа Expression
+     *
+     * @param inputData
+     * @return
+     */
     public Expression convert(List<Expression> inputData) {
-        List<Expression> expressions = reverseNotation(inputData);
-        return null;
+        List<Expression> reversedExpression = reverseNotation(inputData);
+        for (int i = 0; i < reversedExpression.size(); i++) {
+            if (reversedExpression.get(i) == OperationType.INT)
+                continue;
+            if (reversedExpression.get(i) == OperationType.OPENING_BRACKET) {
+                reversedExpression.remove(i);
+                i = 1;
+                continue;
+            }
+            if (reversedExpression.get(i) == OperationType.CLOSING_BRACKET) {
+                reversedExpression.remove(i);
+                i = 1;
+                continue;
+            }
+            if (isBinaryOperation(reversedExpression.get(i))) {
+                Operation operation = OperationImpl.builder()
+                        .firstArgument(reversedExpression.get(i - 2))
+                        .operationType((OperationType) reversedExpression.get(i))
+                        .secondArgument(reversedExpression.get(i - 1))
+                        .build();
+                //вставляем новую операцию вместо трех старых
+                reversedExpression.remove(i - 2);
+                reversedExpression.remove(i - 2);
+                reversedExpression.set(i - 2, operation);
+                i = 1;
+                continue;
+            }
+            if (isUnaryOperation(reversedExpression.get(i))) {
+                Operation operation = OperationImpl.builder()
+                        .firstArgument(reversedExpression.get(i - 1))
+                        .operationType((OperationType) reversedExpression.get(i))
+                        .build();
+                //вставляем новую операцию вместо двух старых
+                reversedExpression.remove(i - 1);
+                reversedExpression.set(i - 1, operation);
+                i = 1;
+            }
+        }
+
+        return reversedExpression.get(1);
     }
 
+    /**
+     * Приводит лист с типами в обратной польской нотации
+     *
+     * @param inputData лист с типами
+     * @return
+     */
     private List<Expression> reverseNotation(List<Expression> inputData) {
         Expression currentExpression, tempExpression, unaryExpression = null;
         List<Expression> expressionStack = new ArrayList<>(), expressionsOut = new ArrayList<>();

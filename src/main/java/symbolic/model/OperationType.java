@@ -2,7 +2,7 @@ package symbolic.model;
 
 import symbolic.visitor.Visitor;
 
-public enum OperationType implements Expression{
+public enum OperationType implements Expression {
     ADDITION,
     SUBTRACTION,
     DIVISION,
@@ -18,7 +18,7 @@ public enum OperationType implements Expression{
 
     @Override
     public Expression accept(Visitor visitor) {
-        return null;
+        return visitor.visit(this);
     }
 
     @Override
