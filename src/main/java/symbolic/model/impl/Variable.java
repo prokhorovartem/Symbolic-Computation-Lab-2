@@ -1,6 +1,5 @@
 package symbolic.model.impl;
 
-import input.ArgumentConvertVisitor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,24 +14,14 @@ import java.math.BigDecimal;
 public class Variable implements Expression {
 
     private BigDecimal value;
-    private String variable;
 
     public Variable(BigDecimal value) {
         this.value = value;
     }
 
-    public Variable(String variable) {
-        this.variable = variable;
-    }
-
     @Override
     public Expression accept(Visitor visitor) {
         return visitor.visit(this);
-    }
-
-    @Override
-    public void accept(ArgumentConvertVisitor visitor) {
-
     }
 
     @Override

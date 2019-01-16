@@ -1,7 +1,7 @@
 import input.Converter;
+import input.InputExpression;
 import input.InputModel;
 import input.Resource;
-import symbolic.model.Expression;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ public class Application {
 
         try {
             inputModel = new InputModel(inputResource);
-            List<Expression> inputData = inputModel.parse();
+            List<InputExpression> inputData = inputModel.parse();
             Converter converter = new Converter();
-            Expression expression = converter.convert(inputData);
+            InputExpression expression = converter.convert(inputData);
         } catch (Exception e) {
             e.printStackTrace();
         }

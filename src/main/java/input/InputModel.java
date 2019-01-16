@@ -1,8 +1,5 @@
 package input;
 
-import symbolic.model.Expression;
-import symbolic.model.impl.Variable;
-
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ public class InputModel {
         this.resource = resource;
     }
 
-    public List<Expression> parse() {
+    public List<InputExpression> parse() {
         String integral = null;
         try (Scanner sc = new Scanner(resource.getFile())) {
             while (sc.hasNextLine()) {
@@ -44,7 +41,7 @@ public class InputModel {
         return createListOfOperationsAndOperands(integral);
     }
 
-    private List<Expression> createListOfOperationsAndOperands(String integral) {
+    private List<InputExpression> createListOfOperationsAndOperands(String integral) {
         Pattern pattern = Pattern.compile("[\\d]+|[-+*/^]|[\\w]+|[()]");
         Matcher matcher = pattern.matcher(integral);
         List<String> words = new ArrayList<>();
@@ -55,11 +52,11 @@ public class InputModel {
 
     }
 
-    private List<Expression> convertStringToExpression(List<String> words) {
-        List<Expression> expressions = new ArrayList<>();
+    private List<InputExpression> convertStringToExpression(List<String> words) {
+        List<InputExpression> expressions = new ArrayList<>();
         for (String word : words) {
             if (word.matches("[\\d]+")) {
-                expressions.add(new Variable(new BigDecimal(word)));
+                expressions.add(new InputVariable(new BigDecimal(word)));
                 continue;
             }
             if (word.matches("[-+*/^]")) {
@@ -76,7 +73,7 @@ public class InputModel {
                 continue;
             }
             if (word.equals("x")) {
-                expressions.add(new Variable(word));
+                expressions.add(new InputVariable(word));
                 continue;
             }
             if (word.equals("(")) {
