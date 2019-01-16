@@ -24,6 +24,10 @@ public class Variable implements Expression {
         this.value = value;
     }
 
+    public Variable(String variable) {
+        this.variable = variable;
+    }
+
     @Override
     public Expression accept(Visitor visitor) {
         return visitor.visit(this);
