@@ -1,18 +1,17 @@
 package symbolic.worker;
 
-import input.BinaryOperation;
-import input.UnaryOperation;
 import symbolic.model.Expression;
+import symbolic.model.OperationType;
 import symbolic.worker.impl.*;
 
 public class Dispatcher {
 
-    public static Expression resolveOperation(Expression operationType, Expression firstArgument, Expression secondArgument) {
-        return secondArgument != null ? ResolveBinaryOperation((BinaryOperation) operationType, firstArgument, secondArgument)
-                : ResolveUnaryOperation((UnaryOperation) operationType, firstArgument);
+    public static Expression resolveOperation(OperationType operationType, Expression firstArgument, Expression secondArgument) {
+        return secondArgument != null ? resolveBinaryOperation(operationType, firstArgument, secondArgument)
+                : resolveUnaryOperation(operationType, firstArgument);
     }
 
-    private static Expression ResolveUnaryOperation(UnaryOperation operationType, Expression firstArgument) {
+    private static Expression resolveUnaryOperation(OperationType operationType, Expression firstArgument) {
 
         Worker worker;
         switch (operationType) {
@@ -35,7 +34,7 @@ public class Dispatcher {
         return worker.work();
     }
 
-    private static Expression ResolveBinaryOperation(BinaryOperation operationType, Expression firstArgument, Expression secondArgument) {
+    private static Expression resolveBinaryOperation(OperationType operationType, Expression firstArgument, Expression secondArgument) {
 
         Worker worker;
         switch (operationType) {

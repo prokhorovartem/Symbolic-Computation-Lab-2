@@ -1,9 +1,6 @@
 package input;
 
-import symbolic.model.Expression;
-import symbolic.visitor.Visitor;
-
-public enum UnaryOperation implements Expression {
+public enum UnaryOperation implements InputExpression {
     SIN,
     COS,
     TAN,
@@ -11,17 +8,8 @@ public enum UnaryOperation implements Expression {
     INT;
 
     @Override
-    public Expression accept(Visitor visitor) {
-        return null;
-    }
-
-    @Override
     public void accept(ArgumentConvertVisitor visitor) {
         visitor.visit(this);
     }
 
-    @Override
-    public boolean isOperation() {
-        return false;
-    }
 }

@@ -1,6 +1,5 @@
 package symbolic.model.impl;
 
-import input.ArgumentConvertVisitor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -13,7 +12,7 @@ import symbolic.visitor.Visitor;
 @Builder
 public class OperationImpl implements Operation {
     @NonNull
-    private Expression operationType;
+    private OperationType operationType;
     @NonNull
     private Expression firstArgument;
     private Expression secondArgument;
@@ -21,11 +20,6 @@ public class OperationImpl implements Operation {
     @Override
     public Expression accept(Visitor visitor) {
         return visitor.visit(this);
-    }
-
-    @Override
-    public void accept(ArgumentConvertVisitor visitor) {
-
     }
 
     @Override
