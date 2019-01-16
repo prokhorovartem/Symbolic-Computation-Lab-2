@@ -7,8 +7,8 @@ import symbolic.worker.Worker;
 public abstract class AbstractWorker implements Worker {
 
     @NonNull
-    private Expression firstArgument;
-    private Expression secondArgument;
+    protected Expression firstArgument;
+    protected Expression secondArgument;
 
     AbstractWorker(Expression firstArgument, Expression secondArgument) {
         this.firstArgument = firstArgument;

@@ -12,4 +12,8 @@ public interface Expression {
     default boolean isOperation() {
         return false;
     }
+
+    default boolean isVariable() {
+        return false;
+    }
 }

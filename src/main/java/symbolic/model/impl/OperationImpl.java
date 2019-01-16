@@ -1,6 +1,7 @@
 package symbolic.model.impl;
 
 import input.ArgumentConvertVisitor;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -11,6 +12,7 @@ import symbolic.visitor.Visitor;
 
 @Getter
 @Builder
+@AllArgsConstructor
 public class OperationImpl implements Operation {
     @NonNull
     private Expression operationType;
