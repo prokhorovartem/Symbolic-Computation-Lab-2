@@ -1,5 +1,7 @@
 package input;
 
+import symbolic.model.Expression;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,18 +12,20 @@ public class Converter {
      * @param inputData
      * @return
      */
-    public InputExpression convert(List<InputExpression> inputData) {
+    public Expression convert(List<InputExpression> inputData) {
         List<InputExpression> reversedExpression = reverseNotation(inputData);
         for (int i = 0; i < reversedExpression.size(); i++) {
-            if (!(reversedExpression.get(i) instanceof BinaryOperation
-                    || reversedExpression.get(i) instanceof UnaryOperation
-                    || reversedExpression.get(i) instanceof Bracket))
-                continue;
-            ArgumentConvertVisitor visitor = new ArgumentConvertVisitorImpl(reversedExpression, i);
-            reversedExpression.get(i).accept(visitor);
-            i = 0;
+            InputExpression expression = reversedExpression.get(i);
+            ArgumentConvertVisitorImpl visitor = new ArgumentConvertVisitorImpl(reversedExpression, i);
+            if (reversedExpression.size() != 1 && !(expression instanceof InputVariable)) {
+                if (expression instanceof BinaryOperation)
+                    i = i - 2;
+                else
+                    i = i - 1;
+            }
+            expression.accept(visitor);
         }
-        return reversedExpression.get(0);
+        return ArgumentConvertVisitorImpl.symbolicExpression.get(0);
     }
 
     /**

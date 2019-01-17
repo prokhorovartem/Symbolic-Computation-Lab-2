@@ -6,4 +6,6 @@ public interface ArgumentConvertVisitor {
     void visit(UnaryOperation operation);
 
     void visit(Bracket bracket);
+
+    void visit(InputVariable inputVariable);
 }

@@ -24,6 +24,6 @@ public class InputVariable implements InputExpression {
 
     @Override
     public void accept(ArgumentConvertVisitor visitor) {
-
+        visitor.visit(this);
     }
 }
