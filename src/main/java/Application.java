@@ -15,6 +15,7 @@ public class Application {
             List<InputExpression> inputData = inputModel.parse();
             Converter converter = new Converter();
             InputExpression expression = converter.convert(inputData);
+            System.out.println(expression);
         } catch (Exception e) {
             e.printStackTrace();
         }

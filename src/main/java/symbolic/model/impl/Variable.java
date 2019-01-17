@@ -13,10 +13,19 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class Variable implements Expression {
 
-    private BigDecimal value;
+    private BigDecimal value = null;
+    private String variable = null;
+
+    public Variable(Integer value) {
+        this.value = BigDecimal.valueOf(value);
+    }
 
     public Variable(BigDecimal value) {
         this.value = value;
+    }
+
+    public Variable(String variable) {
+        this.variable = variable;
     }
 
     @Override
@@ -25,7 +34,11 @@ public class Variable implements Expression {
     }
 
     @Override
-    public boolean isOperation() {
-        return false;
+    public boolean isVariable() {
+        return true;
+    }
+
+    public boolean isValueSet() {
+        return value != null;
     }
 }

@@ -6,14 +6,10 @@ import lombok.NonNull;
 
 @Getter
 @Builder
-public class InputOperation implements InputExpression{
+public class InputOperation {
     @NonNull
     private InputExpression operationType;
     @NonNull
     private InputExpression firstArgument;
     private InputExpression secondArgument;
-
-    @Override
-    public void accept(ArgumentConvertVisitor visitor) {
-    }
 }

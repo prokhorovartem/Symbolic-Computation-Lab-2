@@ -6,5 +6,11 @@ public interface Expression {
 
     Expression accept(Visitor visitor);
 
-    boolean isOperation();
+    default boolean isOperation() {
+        return false;
+    }
+
+    default boolean isVariable() {
+        return false;
+    }
 }
