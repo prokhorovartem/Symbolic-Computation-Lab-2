@@ -1,8 +1,5 @@
 package input;
 
-import symbolic.model.Operation;
-import symbolic.model.impl.OperationImpl;
-
 import java.util.List;
 
 public class ArgumentConvertVisitorImpl implements ArgumentConvertVisitor {
@@ -17,26 +14,26 @@ public class ArgumentConvertVisitorImpl implements ArgumentConvertVisitor {
 
     @Override
     public void visit(BinaryOperation binaryOperation) {
-//        Operation operation = OperationImpl.builder()
-//                .firstArgument(reversedExpression.get(i - 2))
-//                .operationType(reversedExpression.get(i))
-//                .secondArgument(reversedExpression.get(i - 1))
-//                .build();
-////        вставляем новую операцию вместо трех старых
-//        reversedExpression.remove(i - 2);
-//        reversedExpression.remove(i - 2);
-//        reversedExpression.set(i - 2, operation);
+        InputOperation operation = InputOperation.builder()
+                .firstArgument(reversedExpression.get(i - 2))
+                .operationType(reversedExpression.get(i))
+                .secondArgument(reversedExpression.get(i - 1))
+                .build();
+//        вставляем новую операцию вместо трех старых
+        reversedExpression.remove(i - 2);
+        reversedExpression.remove(i - 2);
+        reversedExpression.set(i - 2, operation);
     }
 
     @Override
     public void visit(UnaryOperation unaryOperation) {
-//        Operation operation = OperationImpl.builder()
-//                .firstArgument(reversedExpression.get(i - 1))
-//                .operationType(reversedExpression.get(i))
-//                .build();
-//        //вставляем новую операцию вместо двух старых
-//        reversedExpression.remove(i - 1);
-//        reversedExpression.set(i - 1, operation);
+        InputOperation operation = InputOperation.builder()
+                .firstArgument(reversedExpression.get(i - 1))
+                .operationType(reversedExpression.get(i))
+                .build();
+        //вставляем новую операцию вместо двух старых
+        reversedExpression.remove(i - 1);
+        reversedExpression.set(i - 1, operation);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package input;
 
-import symbolic.model.OperationType;
-
 import java.util.ArrayList;
 import java.util.List;
 
