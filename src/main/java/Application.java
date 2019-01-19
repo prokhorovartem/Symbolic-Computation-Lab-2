@@ -1,5 +1,5 @@
 import input.Converter;
-import input.InputExpression;
+import input.model.InputExpression;
 import input.InputModel;
 import input.Resource;
 import symbolic.model.Expression;

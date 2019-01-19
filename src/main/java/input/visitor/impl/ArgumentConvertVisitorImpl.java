@@ -1,5 +1,9 @@
-package input;
+package input.visitor.impl;
 
+import input.model.*;
+import input.model.impl.InputOperation;
+import input.model.impl.InputVariable;
+import input.visitor.ArgumentConvertVisitor;
 import symbolic.model.Expression;
 import symbolic.model.Operation;
 import symbolic.model.OperationType;
@@ -11,11 +15,11 @@ import java.util.List;
 
 public class ArgumentConvertVisitorImpl implements ArgumentConvertVisitor {
 
-    static List<Expression> symbolicExpression = new ArrayList<>();
+    public static List<Expression> symbolicExpression = new ArrayList<>();
     private List<InputExpression> reversedExpression;
     private int i;
 
-    ArgumentConvertVisitorImpl(List<InputExpression> reversedExpression, int i) {
+    public ArgumentConvertVisitorImpl(List<InputExpression> reversedExpression, int i) {
         this.reversedExpression = reversedExpression;
         this.i = i;
     }

@@ -1,5 +1,7 @@
-package input;
+package input.model.impl;
 
+import input.model.InputExpression;
+import input.visitor.ArgumentConvertVisitor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,11 +16,11 @@ public class InputVariable implements InputExpression {
     private BigDecimal value;
     private String variable;
 
-    InputVariable(String variable) {
+    public InputVariable(String variable) {
         this.variable = variable;
     }
 
-    InputVariable(BigDecimal value) {
+    public InputVariable(BigDecimal value) {
         this.value = value;
     }
 

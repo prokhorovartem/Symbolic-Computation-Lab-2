@@ -1,5 +1,11 @@
 package input;
 
+import input.model.BinaryOperation;
+import input.model.Bracket;
+import input.model.InputExpression;
+import input.model.UnaryOperation;
+import input.model.impl.InputVariable;
+
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;

@@ -1,4 +1,6 @@
-package input;
+package input.model;
+
+import input.visitor.ArgumentConvertVisitor;
 
 public enum UnaryOperation implements InputExpression {
     SIN,
