@@ -3,6 +3,7 @@ import input.model.InputExpression;
 import input.InputModel;
 import input.Resource;
 import symbolic.model.Expression;
+import symbolic.visitor.impl.Resolver;
 
 import java.util.List;
 
@@ -16,7 +17,8 @@ public class Application {
             List<InputExpression> inputData = inputModel.parse();
             Converter converter = new Converter();
             Expression expression = converter.convert(inputData);
-            System.out.println(expression);
+            Expression resolvedExpression = Resolver.resolveExpression(expression);
+            System.out.println(resolvedExpression);
         } catch (Exception e) {
             e.printStackTrace();
         }

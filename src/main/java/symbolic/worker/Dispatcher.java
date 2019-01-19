@@ -50,6 +50,9 @@ public class Dispatcher {
             case DIVISION:
                 worker = new DivisionWorker(firstArgument, secondArgument);
                 break;
+            case POW:
+                worker = new PowerWorker(firstArgument, secondArgument);
+                break;
 //            case INT:
 //                worker = new IntegrationWorker(firstArgument, secondArgument);
 //                break;

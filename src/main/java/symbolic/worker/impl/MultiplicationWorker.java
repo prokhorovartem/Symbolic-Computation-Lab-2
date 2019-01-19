@@ -1,6 +1,9 @@
 package symbolic.worker.impl;
 
 import symbolic.model.Expression;
+import symbolic.model.OperationType;
+import symbolic.model.impl.OperationImpl;
+import symbolic.model.impl.Variable;
 
 public class MultiplicationWorker extends AbstractWorker {
     public MultiplicationWorker(Expression firstArgument, Expression secondArgument) {
@@ -13,6 +16,22 @@ public class MultiplicationWorker extends AbstractWorker {
 
     @Override
     public Expression work() {
-        return null;
+        if (firstArgument.isOperation() && secondArgument.isOperation()) {
+            throw new UnsupportedOperationException("Mul of functions");
+        } else if (firstArgument.isVariable() && secondArgument.isVariable()) {
+            Variable firstArg = (Variable) firstArgument;
+            Variable secondArg = (Variable) secondArgument;
+            if (firstArg.isValueSet() && secondArg.isValueSet()) {
+                return new Variable(firstArg.getValue().multiply(secondArg.getValue()));
+            } else if (firstArg.getVariable().equals(secondArg.getVariable())) {
+                return new PowerWorker(
+                        new Variable(firstArg.getVariable()),
+                        new Variable(2)
+                ).work();
+            }
+        } else {
+            return new OperationImpl(OperationType.MULTIPLICATION, firstArgument, secondArgument);
+        }
+        throw new RuntimeException("Something went terribly wrong");
     }
 }
