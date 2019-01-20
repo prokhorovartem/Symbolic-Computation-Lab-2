@@ -1,5 +1,6 @@
 package symbolic.worker.impl;
 
+import org.apfloat.Apfloat;
 import symbolic.model.Expression;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
@@ -25,7 +26,9 @@ public class DivisionWorker extends AbstractWorker {
             Variable firstArg = (Variable) firstArgument;
             Variable secondArg = (Variable) secondArgument;
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
-                return new Variable(firstArg.getValue().divide(secondArg.getValue()));
+                Apfloat firstArgument = new Apfloat(firstArg.getValue());
+                Apfloat secondArgument = new Apfloat(secondArg.getValue());
+                return new Variable(new BigDecimal(firstArgument.divide(secondArgument).doubleValue()));
             } else if (Objects.equals(firstArg.getVariable(), secondArg.getVariable())) {
                 return new Variable(
                         new BigDecimal(1)
