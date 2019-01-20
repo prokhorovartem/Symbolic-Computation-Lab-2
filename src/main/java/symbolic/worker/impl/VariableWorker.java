@@ -5,6 +5,8 @@ import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
 
+import java.math.BigDecimal;
+
 public class VariableWorker extends AbstractWorker {
     private final Variable variable;
     private final String name;
@@ -28,11 +30,15 @@ public class VariableWorker extends AbstractWorker {
                     new Variable(2)
             );
         } else {
-            return new OperationImpl(
-                    OperationType.MULTIPLICATION,
-                    new Variable(variable.getValue()),
-                    new Variable(name)
-            );
+            if (BigDecimal.ONE.equals(variable.getValue())) {
+                return new Variable(name);
+            } else {
+                return new OperationImpl(
+                        OperationType.MULTIPLICATION,
+                        new Variable(variable.getValue()),
+                        new Variable(name)
+                );
+            }
         }
     }
 }

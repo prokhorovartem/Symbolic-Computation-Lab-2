@@ -9,8 +9,5 @@ public enum OperationType {
     INT,
     SIN,
     COS,
-    TAN,
-    OPENING_BRACKET,
-    CLOSING_BRACKET;
-
+    TAN
 }
