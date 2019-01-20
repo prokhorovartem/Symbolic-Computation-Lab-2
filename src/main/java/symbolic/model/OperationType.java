@@ -10,7 +10,6 @@ public enum OperationType {
     SIN,
     COS,
     TAN,
-    CTG,
     OPENING_BRACKET,
     CLOSING_BRACKET;
 

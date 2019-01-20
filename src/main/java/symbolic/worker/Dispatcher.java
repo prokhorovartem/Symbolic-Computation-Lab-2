@@ -24,9 +24,6 @@ public class Dispatcher {
             case TAN:
                 worker = new TanWorker(firstArgument);
                 break;
-            case CTG:
-                worker = new CtgWorker(firstArgument);
-                break;
             default:
                 throw new UnsupportedOperationException();
         }
