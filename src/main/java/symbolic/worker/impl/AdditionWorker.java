@@ -30,10 +30,11 @@ public class AdditionWorker extends AbstractWorker {
                         new Variable(2),
                         new Variable(firstArg.getVariable())
                 ).work();
+            } else {
+                return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);
             }
         } else {
             return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);
         }
-        throw new RuntimeException("Something went terribly wrong");
     }
 }
