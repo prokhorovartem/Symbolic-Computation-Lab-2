@@ -1,9 +1,9 @@
-package input.visitor;
+package io.visitor;
 
-import input.model.BinaryOperation;
-import input.model.Bracket;
-import input.model.impl.InputVariable;
-import input.model.UnaryOperation;
+import io.model.BinaryOperation;
+import io.model.Bracket;
+import io.model.impl.InputVariable;
+import io.model.UnaryOperation;
 
 public interface ArgumentConvertVisitor {
     void visit(BinaryOperation operation);

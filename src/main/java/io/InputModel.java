@@ -1,10 +1,10 @@
-package input;
+package io;
 
-import input.model.BinaryOperation;
-import input.model.Bracket;
-import input.model.InputExpression;
-import input.model.UnaryOperation;
-import input.model.impl.InputVariable;
+import io.model.BinaryOperation;
+import io.model.Bracket;
+import io.model.InputExpression;
+import io.model.UnaryOperation;
+import io.model.impl.InputVariable;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;

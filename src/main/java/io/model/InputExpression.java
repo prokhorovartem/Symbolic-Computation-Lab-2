@@ -1,6 +1,6 @@
-package input.model;
+package io.model;
 
-import input.visitor.ArgumentConvertVisitor;
+import io.visitor.ArgumentConvertVisitor;
 
 public interface InputExpression {
     void accept(ArgumentConvertVisitor visitor);

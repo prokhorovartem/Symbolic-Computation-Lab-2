@@ -1,7 +1,7 @@
-package input.model.impl;
+package io.model.impl;
 
-import input.model.InputExpression;
-import input.visitor.ArgumentConvertVisitor;
+import io.model.InputExpression;
+import io.visitor.ArgumentConvertVisitor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;

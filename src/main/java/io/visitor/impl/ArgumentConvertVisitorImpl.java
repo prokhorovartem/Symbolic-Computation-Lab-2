@@ -1,9 +1,9 @@
-package input.visitor.impl;
+package io.visitor.impl;
 
-import input.model.*;
-import input.model.impl.InputOperation;
-import input.model.impl.InputVariable;
-import input.visitor.ArgumentConvertVisitor;
+import io.model.*;
+import io.model.impl.InputOperation;
+import io.model.impl.InputVariable;
+import io.visitor.ArgumentConvertVisitor;
 import symbolic.model.Expression;
 import symbolic.model.Operation;
 import symbolic.model.OperationType;

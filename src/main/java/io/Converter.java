@@ -1,8 +1,8 @@
-package input;
+package io;
 
-import input.model.*;
-import input.model.impl.InputVariable;
-import input.visitor.impl.ArgumentConvertVisitorImpl;
+import io.model.*;
+import io.model.impl.InputVariable;
+import io.visitor.impl.ArgumentConvertVisitorImpl;
 import symbolic.model.Expression;
 
 import java.util.ArrayList;

@@ -1,11 +1,22 @@
-<ANSWER>
-	<VARIABLE>X</VARIABLE>
-<MULTIPLY/>
-	<VARIABLE>X</VARIABLE>
-<DIVIDE/>
-	<NUMBER>2.0</NUMBER>
-<PLUS/>
-	<NUMBER>2.0</NUMBER>
-<MULTIPLY/>
-	<VARIABLE>X</VARIABLE>
-</ANSWER>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<operation>
+    <firstArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation">
+        <firstArgument xsi:type="variable">
+            <value>-1</value>
+        </firstArgument>
+        <operationType>MULTIPLICATION</operationType>
+        <secondArgument xsi:type="variable">
+            <variable>x</variable>
+        </secondArgument>
+    </firstArgument>
+    <operationType>ADDITION</operationType>
+    <secondArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation">
+        <firstArgument xsi:type="variable">
+            <value>2</value>
+        </firstArgument>
+        <operationType>MULTIPLICATION</operationType>
+        <secondArgument xsi:type="variable">
+            <variable>x</variable>
+        </secondArgument>
+    </secondArgument>
+</operation>

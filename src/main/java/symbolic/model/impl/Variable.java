@@ -6,11 +6,13 @@ import lombok.Setter;
 import symbolic.model.Expression;
 import symbolic.visitor.Visitor;
 
+import javax.xml.bind.annotation.XmlType;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@XmlType(name = "variable")
 public class Variable implements Expression {
 
     private BigDecimal value = null;
