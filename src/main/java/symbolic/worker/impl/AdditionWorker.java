@@ -19,7 +19,7 @@ public class AdditionWorker extends AbstractWorker {
     @Override
     public Expression work() {
         if (firstArgument.isOperation() && secondArgument.isOperation()) {
-            throw new UnsupportedOperationException("Sum of functions");
+            return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);
         } else if (firstArgument.isVariable() && secondArgument.isVariable()) {
             Variable firstArg = (Variable) firstArgument;
             Variable secondArg = (Variable) secondArgument;

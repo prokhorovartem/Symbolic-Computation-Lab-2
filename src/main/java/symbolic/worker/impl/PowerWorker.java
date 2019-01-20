@@ -24,6 +24,7 @@ public class PowerWorker extends AbstractWorker {
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
                 return new Variable(firstArg.getValue().pow(secondArg.getValue().intValue()));
             }
+            // todo x^n, n^x
         } else {
             return new OperationImpl(OperationType.POW, firstArgument, secondArgument);
         }

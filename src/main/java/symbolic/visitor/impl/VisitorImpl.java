@@ -2,13 +2,15 @@ package symbolic.visitor.impl;
 
 import symbolic.model.Expression;
 import symbolic.model.Operation;
+import symbolic.model.impl.Variable;
 import symbolic.visitor.Visitor;
 import symbolic.worker.Dispatcher;
 
 public class VisitorImpl implements Visitor {
+
     @Override
     public Expression visit(Expression expression) {
-        return expression.isOperation() ? visit((Operation) expression) : expression;
+        return expression.isOperation() ? visit((Operation) expression) : Resolver.resolveVariable((Variable) expression);
     }
 
     @Override
