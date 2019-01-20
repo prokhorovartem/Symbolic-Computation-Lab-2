@@ -30,10 +30,11 @@ public class MultiplicationWorker extends AbstractWorker {
                         new Variable(firstArg.getVariable()),
                         new Variable(2)
                 ).work();
+            } else {
+                return new OperationImpl(OperationType.MULTIPLICATION, firstArgument, secondArgument);
             }
         } else {
             return new OperationImpl(OperationType.MULTIPLICATION, firstArgument, secondArgument);
         }
-        throw new RuntimeException("Something went terribly wrong");
     }
 }
