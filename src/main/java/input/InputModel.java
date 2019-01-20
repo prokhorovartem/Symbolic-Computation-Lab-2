@@ -60,16 +60,22 @@ public class InputModel {
 
     private List<InputExpression> convertStringToExpression(List<String> words) {
         List<InputExpression> expressions = new ArrayList<>();
-        for (String word : words) {
+        for (int i = 0; i < words.size(); i++) {
+            String word = words.get(i);
             if (word.matches("[\\d]+")) {
                 expressions.add(new InputVariable(new BigDecimal(word)));
                 continue;
             }
             if (word.matches("[-+*/^]")) {
-                if (word.equals("+"))
+                if (word.equals("+")) {
                     expressions.add(BinaryOperation.ADDITION);
+                }
                 if (word.equals("-"))
-                    expressions.add(BinaryOperation.SUBTRACTION);
+                    if (!(words.get(i - 1).matches("[\\d]+"))) {
+                        expressions.add(new InputVariable(new BigDecimal(words.get(i + 1)).multiply(BigDecimal.valueOf(-1))));
+                        i++;
+                    } else
+                        expressions.add(BinaryOperation.SUBTRACTION);
                 if (word.equals("*"))
                     expressions.add(BinaryOperation.MULTIPLICATION);
                 if (word.equals("/"))
