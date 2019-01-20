@@ -6,6 +6,7 @@ import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class DivisionWorker extends AbstractWorker {
     public DivisionWorker(Expression firstArgument, Expression secondArgument) {
@@ -25,7 +26,7 @@ public class DivisionWorker extends AbstractWorker {
             Variable secondArg = (Variable) secondArgument;
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
                 return new Variable(firstArg.getValue().divide(secondArg.getValue()));
-            } else if (firstArg.getVariable().equals(secondArg.getVariable())) {
+            } else if (Objects.equals(firstArg.getVariable(), secondArg.getVariable())) {
                 return new Variable(
                         new BigDecimal(1)
                 );
