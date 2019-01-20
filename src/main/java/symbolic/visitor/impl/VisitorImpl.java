@@ -16,7 +16,8 @@ public class VisitorImpl implements Visitor {
         return Dispatcher.resolveOperation(
                 operation.getOperationType(),
                 Resolver.resolveExpression(operation.getFirstArgument()),
-                Resolver.resolveExpression(operation.getSecondArgument())
+                (operation.getSecondArgument() != null)
+                        ? Resolver.resolveExpression(operation.getSecondArgument()) : null
         );
     }
 }

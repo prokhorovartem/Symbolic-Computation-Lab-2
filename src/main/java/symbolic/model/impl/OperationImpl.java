@@ -19,6 +19,11 @@ public class OperationImpl implements Operation {
     private Expression firstArgument;
     private Expression secondArgument;
 
+    public OperationImpl(@NonNull OperationType operationType, @NonNull Expression firstArgument) {
+        this.operationType = operationType;
+        this.firstArgument = firstArgument;
+    }
+
     @Override
     public Expression accept(Visitor visitor) {
         return visitor.visit(this);
