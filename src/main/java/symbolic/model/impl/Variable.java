@@ -6,6 +6,8 @@ import lombok.Setter;
 import symbolic.model.Expression;
 import symbolic.visitor.Visitor;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.math.BigDecimal;
@@ -13,12 +15,13 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@XmlType(name = "variable")
+@XmlType(propOrder = {"value", "name"}, name = "variable")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Variable implements Expression {
 
     private BigDecimal value = null;
-    @XmlElement(name = "name")
-    private String variable = null;
+    @XmlElement
+    private String name = null;
 
     public Variable(Integer value) {
         this.value = BigDecimal.valueOf(value);
@@ -28,8 +31,8 @@ public class Variable implements Expression {
         this.value = value;
     }
 
-    public Variable(String variable) {
-        this.variable = variable;
+    public Variable(String name) {
+        this.name = name;
     }
 
     @Override

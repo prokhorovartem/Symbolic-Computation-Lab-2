@@ -29,7 +29,7 @@ public class DivisionWorker extends AbstractWorker {
                 Apfloat firstArgument = new Apfloat(firstArg.getValue());
                 Apfloat secondArgument = new Apfloat(secondArg.getValue());
                 return new Variable(new BigDecimal(firstArgument.divide(secondArgument).doubleValue()));
-            } else if (Objects.equals(firstArg.getVariable(), secondArg.getVariable())) {
+            } else if (Objects.equals(firstArg.getName(), secondArg.getName())) {
                 return new Variable(BigDecimal.ONE);
             }
         } else {

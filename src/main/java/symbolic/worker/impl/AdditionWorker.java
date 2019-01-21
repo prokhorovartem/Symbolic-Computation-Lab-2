@@ -25,10 +25,10 @@ public class AdditionWorker extends AbstractWorker {
             Variable secondArg = (Variable) secondArgument;
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
                 return new Variable(firstArg.getValue().add(secondArg.getValue()));
-            } else if (Objects.equals(firstArg.getVariable(), secondArg.getVariable())) {
+            } else if (Objects.equals(firstArg.getName(), secondArg.getName())) {
                 return new MultiplicationWorker(
                         new Variable(2),
-                        new Variable(firstArg.getVariable())
+                        new Variable(firstArg.getName())
                 ).work();
             } else {
                 return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);

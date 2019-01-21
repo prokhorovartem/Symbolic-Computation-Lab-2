@@ -24,7 +24,7 @@ public class PowerWorker extends AbstractWorker {
             Variable secondArg = (Variable) secondArgument;
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
                 return new Variable(firstArg.getValue().pow(secondArg.getValue().intValue()));
-            } else if (Resolver.name.equals(firstArg.getVariable())) {
+            } else if (Resolver.name.equals(firstArg.getName())) {
                 return new OperationImpl(
                         OperationType.DIVISION,
                         new OperationImpl(
@@ -34,7 +34,7 @@ public class PowerWorker extends AbstractWorker {
                         ),
                         new AdditionWorker(secondArg, new Variable(1)).work()
                 );
-            } else if (Resolver.name.equals(secondArg.getVariable())) {
+            } else if (Resolver.name.equals(secondArg.getName())) {
 //                return new OperationImpl(
 //                        OperationType.DIVISION,
 //                        new OperationImpl(

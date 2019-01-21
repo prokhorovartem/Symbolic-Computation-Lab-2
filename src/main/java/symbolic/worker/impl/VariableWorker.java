@@ -19,12 +19,12 @@ public class VariableWorker extends AbstractWorker {
 
     @Override
     public Expression work() {
-        if (!variable.isValueSet() && variable.getVariable().equals(name)) {
+        if (!variable.isValueSet() && variable.getName().equals(name)) {
             return new OperationImpl(
                     OperationType.DIVISION,
                     new OperationImpl(
                             OperationType.POW,
-                            new Variable(variable.getVariable()),
+                            new Variable(variable.getName()),
                             new Variable(2)
                     ),
                     new Variable(2)

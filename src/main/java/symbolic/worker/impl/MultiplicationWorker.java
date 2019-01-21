@@ -25,9 +25,9 @@ public class MultiplicationWorker extends AbstractWorker {
             Variable secondArg = (Variable) secondArgument;
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
                 return new Variable(firstArg.getValue().multiply(secondArg.getValue()));
-            } else if (Objects.equals(firstArg.getVariable(), secondArg.getVariable())) {
+            } else if (Objects.equals(firstArg.getName(), secondArg.getName())) {
                 return new PowerWorker(
-                        new Variable(firstArg.getVariable()),
+                        new Variable(firstArg.getName()),
                         new Variable(2)
                 ).work();
             } else {
