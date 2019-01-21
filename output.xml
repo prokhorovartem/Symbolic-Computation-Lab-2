@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<operation>
-    <firstArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation">
+<operation operationType="ADDITION">
+    <firstArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation" operationType="MULTIPLICATION">
         <firstArgument xsi:type="variable">
             <value>-1</value>
         </firstArgument>
-        <operationType>MULTIPLICATION</operationType>
         <secondArgument xsi:type="variable">
-            <variable>x</variable>
+            <name>x</name>
         </secondArgument>
     </firstArgument>
-    <operationType>ADDITION</operationType>
-    <secondArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation">
+    <secondArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation" operationType="MULTIPLICATION">
         <firstArgument xsi:type="variable">
             <value>2</value>
         </firstArgument>
-        <operationType>MULTIPLICATION</operationType>
         <secondArgument xsi:type="variable">
-            <variable>x</variable>
+            <name>x</name>
         </secondArgument>
     </secondArgument>
 </operation>

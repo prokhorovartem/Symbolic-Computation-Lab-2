@@ -9,6 +9,7 @@ import symbolic.model.Operation;
 import symbolic.model.OperationType;
 import symbolic.visitor.Visitor;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -17,10 +18,10 @@ import javax.xml.bind.annotation.XmlType;
 @Builder
 @AllArgsConstructor
 @XmlRootElement(name = "operation")
-@XmlType(propOrder = {"firstArgument", "operationType", "secondArgument"}, name = "operation")
+@XmlType(propOrder = {"firstArgument", "secondArgument"}, name = "operation")
 public class OperationImpl implements Operation {
     @NonNull
-    @XmlElement
+    @XmlAttribute
     private OperationType operationType;
     @NonNull
     @XmlElement
