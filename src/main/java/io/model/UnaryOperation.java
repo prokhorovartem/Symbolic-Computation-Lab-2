@@ -6,6 +6,7 @@ public enum UnaryOperation implements InputExpression {
     SIN,
     COS,
     TAN,
+    EXP,
     INT;
 
     @Override

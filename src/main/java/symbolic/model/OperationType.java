@@ -9,5 +9,6 @@ public enum OperationType {
     INT,
     SIN,
     COS,
-    TAN
+    TAN,
+    EXP
 }

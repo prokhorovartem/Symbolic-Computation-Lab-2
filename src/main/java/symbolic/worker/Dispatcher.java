@@ -24,6 +24,9 @@ public class Dispatcher {
             case TAN:
                 worker = new TanWorker(firstArgument);
                 break;
+            case EXP:
+                worker = new ExpWorker(firstArgument);
+                break;
             default:
                 throw new UnsupportedOperationException();
         }
