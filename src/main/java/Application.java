@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
-        Resource inputResource = new Resource("input.tex");
-        Resource outputResource = new Resource("output.xml");
+        Resource inputResource = new Resource(args[0]);
+        Resource outputResource = new Resource(args[1]);
 
         try {
             InputModel inputModel = new InputModel(inputResource);
@@ -20,7 +20,7 @@ public class Application {
             Converter converter = new Converter();
             Expression expression = converter.convert(inputData);
 
-            Resolver.name = "x"; //todo
+            Resolver.name = "x";
             Expression resolvedExpression = Resolver.resolveExpression(expression);
 
             OutputModel outputModel = new OutputModel(outputResource);
