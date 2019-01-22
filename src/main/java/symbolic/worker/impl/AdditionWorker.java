@@ -4,7 +4,6 @@ import symbolic.model.Expression;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
-import symbolic.visitor.impl.IntegrationParamHolder;
 
 import java.util.Objects;
 
@@ -19,9 +18,7 @@ public class AdditionWorker extends AbstractWorker {
 
     @Override
     public Expression work() {
-        if (firstArgument.isOperation() && secondArgument.isOperation()) {
-            return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);
-        } else if (firstArgument.isVariable() && secondArgument.isVariable()) {
+        if (firstArgument.isVariable() && secondArgument.isVariable()) {
             Variable firstArg = (Variable) firstArgument;
             Variable secondArg = (Variable) secondArgument;
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
@@ -32,10 +29,9 @@ public class AdditionWorker extends AbstractWorker {
                         new Variable(firstArg.getName())
                 ).work();
             } else {
-                String name = IntegrationParamHolder.getInstance().getName();
-                firstArgument =  new VariableWorker(firstArg).work();
+                firstArgument = new VariableWorker(firstArg).work();
                 secondArgument = new VariableWorker(secondArg).work();
-                return new OperationImpl(OperationType.ADDITION,  firstArgument, secondArgument);
+                return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);
             }
         } else {
             return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);
