@@ -8,10 +8,7 @@ import io.model.impl.InputVariable;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,8 +69,12 @@ public class InputModel {
                 }
                 if (word.equals("-"))
                     if (!(words.get(i - 1).matches("[\\d]+"))) {
-                        expressions.add(new InputVariable(new BigDecimal(words.get(i + 1)).multiply(BigDecimal.valueOf(-1))));
-                        i++;
+                        try {
+                            expressions.add(new InputVariable(new BigDecimal(words.get(i + 1)).multiply(BigDecimal.valueOf(-1))));
+                            i++;
+                        } catch (Exception e){
+                            expressions.add(BinaryOperation.SUBTRACTION);
+                        }
                     } else
                         expressions.add(BinaryOperation.SUBTRACTION);
                 if (word.equals("*"))
@@ -97,7 +98,20 @@ public class InputModel {
                 continue;
             }
             if (word.matches("[\\w]+"))
-                expressions.add(UnaryOperation.valueOf(word.toUpperCase()));
+                try {
+                    expressions.add(UnaryOperation.valueOf(word.toUpperCase()));
+                } catch (Exception e) {
+                    if (Objects.equals(words.get(i + 1), "(")) {
+                        StringBuilder sb = new StringBuilder();
+                        while (!Objects.equals(words.get(i), ")")) {
+                            sb.append(words.get(i));
+                            i++;
+                        }
+                        sb.append(words.get(i));
+                        expressions.add(new InputVariable(sb.toString()));
+                    } else
+                        expressions.add(new InputVariable(word));
+                }
         }
         return expressions;
     }
