@@ -48,7 +48,7 @@ public class InputModel {
     private String findIntegrationParam(StringBuilder integral) {
         String[] chars = integral.toString().split(" ");
         char[] diff = chars[chars.length - 1].toCharArray();
-        if (diff[0] == 'd'){
+        if (diff[0] == 'd') {
             IntegrationParamHolder.getInstance().setName(String.valueOf(diff[1]));
         } else IntegrationParamHolder.getInstance().setName("x");
         return integral.toString().replace(chars[chars.length - 1], "").replaceAll("[$]*", "");
@@ -82,7 +82,7 @@ public class InputModel {
                         try {
                             expressions.add(new InputVariable(new BigDecimal(words.get(i + 1)).multiply(BigDecimal.valueOf(-1))));
                             i++;
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             expressions.add(BinaryOperation.SUBTRACTION);
                         }
                     } else
@@ -111,15 +111,18 @@ public class InputModel {
                 try {
                     expressions.add(UnaryOperation.valueOf(word.toUpperCase()));
                 } catch (Exception e) {
-                    if (Objects.equals(words.get(i + 1), "(")) {
-                        StringBuilder sb = new StringBuilder();
-                        while (!Objects.equals(words.get(i), ")")) {
+                    if (i != words.size() - 1)
+                        if (Objects.equals(words.get(i + 1), "(")) {
+                            StringBuilder sb = new StringBuilder();
+                            while (!Objects.equals(words.get(i), ")")) {
+                                sb.append(words.get(i));
+                                i++;
+                            }
                             sb.append(words.get(i));
-                            i++;
-                        }
-                        sb.append(words.get(i));
-                        expressions.add(new InputVariable(sb.toString()));
-                    } else
+                            expressions.add(new InputVariable(sb.toString()));
+                        } else
+                            expressions.add(new InputVariable(word));
+                    else
                         expressions.add(new InputVariable(word));
                 }
         }
