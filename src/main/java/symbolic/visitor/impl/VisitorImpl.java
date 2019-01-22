@@ -10,16 +10,19 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public Expression visit(Expression expression) {
-        return expression.isOperation() ? visit((Operation) expression) : Resolver.resolveVariable((Variable) expression);
+        Resolver resolver = new Resolver();
+        return expression.isOperation() ? visit((Operation) expression) : resolver.resolveVariable((Variable) expression);
     }
 
     @Override
     public Expression visit(Operation operation) {
-        return Dispatcher.resolveOperation(
+        Dispatcher dispatcher = new Dispatcher();
+        Resolver resolver = new Resolver();
+        return dispatcher.resolveOperation(
                 operation.getOperationType(),
-                Resolver.resolveExpression(operation.getFirstArgument()),
+                resolver.resolveExpression(operation.getFirstArgument()),
                 (operation.getSecondArgument() != null)
-                        ? Resolver.resolveExpression(operation.getSecondArgument()) : null
+                        ? resolver.resolveExpression(operation.getSecondArgument()) : null
         );
     }
 }

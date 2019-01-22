@@ -6,12 +6,12 @@ import symbolic.worker.impl.*;
 
 public class Dispatcher {
 
-    public static Expression resolveOperation(OperationType operationType, Expression firstArgument, Expression secondArgument) {
+    public Expression resolveOperation(OperationType operationType, Expression firstArgument, Expression secondArgument) {
         return secondArgument != null ? resolveBinaryOperation(operationType, firstArgument, secondArgument)
                 : resolveUnaryOperation(operationType, firstArgument);
     }
 
-    private static Expression resolveUnaryOperation(OperationType operationType, Expression firstArgument) {
+    private Expression resolveUnaryOperation(OperationType operationType, Expression firstArgument) {
 
         Worker worker;
         switch (operationType) {
@@ -31,7 +31,7 @@ public class Dispatcher {
         return worker.work();
     }
 
-    private static Expression resolveBinaryOperation(OperationType operationType, Expression firstArgument, Expression secondArgument) {
+    private Expression resolveBinaryOperation(OperationType operationType, Expression firstArgument, Expression secondArgument) {
 
         Worker worker;
         switch (operationType) {

@@ -20,8 +20,9 @@ public class Application {
             Converter converter = new Converter();
             Expression expression = converter.convert(inputData);
 
+            Resolver resolver = new Resolver();
             Resolver.name = "x";
-            Expression resolvedExpression = Resolver.resolveExpression(expression);
+            Expression resolvedExpression = resolver.resolveExpression(expression);
 
             OutputModel outputModel = new OutputModel(outputResource);
             outputModel.printResult(resolvedExpression);

@@ -9,11 +9,11 @@ public class Resolver {
     public static String name;
     private static final Visitor VISITOR = new VisitorImpl();
 
-    public static Expression resolveExpression(Expression expression) {
+    public Expression resolveExpression(Expression expression) {
         return expression.accept(VISITOR);
     }
 
-    public static Expression resolveVariable(Variable variable) {
+    public Expression resolveVariable(Variable variable) {
         return new VariableWorker(variable, name).work();
     }
 }
