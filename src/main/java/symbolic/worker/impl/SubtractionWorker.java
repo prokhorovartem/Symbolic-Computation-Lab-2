@@ -4,6 +4,7 @@ import symbolic.model.Expression;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
+import symbolic.visitor.impl.IntegrationParamHolder;
 
 public class SubtractionWorker extends AbstractWorker {
     public SubtractionWorker(Expression firstArgument, Expression secondArgument) {
@@ -23,10 +24,14 @@ public class SubtractionWorker extends AbstractWorker {
             Variable secondArg = (Variable) secondArgument;
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
                 return new Variable(firstArg.getValue().subtract(secondArg.getValue()));
+            } else {
+                String name = IntegrationParamHolder.getInstance().getName();
+                firstArgument =  new VariableWorker(firstArg).work();
+                secondArgument = new VariableWorker(secondArg).work();
+                return new OperationImpl(OperationType.SUBTRACTION, firstArgument, secondArgument);
             }
         } else {
             return new OperationImpl(OperationType.SUBTRACTION, firstArgument, secondArgument);
         }
-        throw new RuntimeException("Something went terribly wrong");
     }
 }

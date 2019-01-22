@@ -4,6 +4,7 @@ import symbolic.model.Expression;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
+import symbolic.visitor.impl.IntegrationParamHolder;
 import symbolic.visitor.impl.Resolver;
 
 public class PowerWorker extends AbstractWorker {
@@ -17,6 +18,8 @@ public class PowerWorker extends AbstractWorker {
 
     @Override
     public Expression work() {
+        final String name = IntegrationParamHolder.getInstance().getName();
+
         if (firstArgument.isOperation() && secondArgument.isOperation()) {
             throw new UnsupportedOperationException("Pow of functions");
         } else if (firstArgument.isVariable() && secondArgument.isVariable()) {
@@ -24,7 +27,7 @@ public class PowerWorker extends AbstractWorker {
             Variable secondArg = (Variable) secondArgument;
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
                 return new Variable(firstArg.getValue().pow(secondArg.getValue().intValue()));
-            } else if (Resolver.name.equals(firstArg.getName())) {
+            } else if (name.equals(firstArg.getName())) {
                 return new OperationImpl(
                         OperationType.DIVISION,
                         new OperationImpl(
@@ -34,7 +37,7 @@ public class PowerWorker extends AbstractWorker {
                         ),
                         new AdditionWorker(secondArg, new Variable(1)).work()
                 );
-            } else if (Resolver.name.equals(secondArg.getName())) {
+            } else if (name.equals(secondArg.getName())) {
 //                return new OperationImpl(
 //                        OperationType.DIVISION,
 //                        new OperationImpl(
@@ -45,7 +48,7 @@ public class PowerWorker extends AbstractWorker {
 //                        new OperationImpl(OperationType.LN, firstArg)
 //                );
                 //todo
-                throw new UnsupportedOperationException("a^" + Resolver.name + " unsupported");
+                throw new UnsupportedOperationException("a^" + name + " unsupported");
             }
         } else {
             return new OperationImpl(OperationType.POW, firstArgument, secondArgument);

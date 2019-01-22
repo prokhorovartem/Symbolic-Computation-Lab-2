@@ -4,6 +4,7 @@ import symbolic.model.Expression;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
+import symbolic.visitor.impl.IntegrationParamHolder;
 
 import java.util.Objects;
 
@@ -18,6 +19,7 @@ public class MultiplicationWorker extends AbstractWorker {
 
     @Override
     public Expression work() {
+        final String name = IntegrationParamHolder.getInstance().getName();
         if (firstArgument.isOperation() && secondArgument.isOperation()) {
             throw new UnsupportedOperationException("Mul of functions");
         } else if (firstArgument.isVariable() && secondArgument.isVariable()) {
@@ -30,6 +32,18 @@ public class MultiplicationWorker extends AbstractWorker {
                         new Variable(firstArg.getName()),
                         new Variable(2)
                 ).work();
+            } else if (name.equals(firstArg.getName())) {
+                return new OperationImpl(
+                        OperationType.MULTIPLICATION,
+                        secondArgument,
+                        new VariableWorker(firstArg).work()
+                );
+            } else if (name.equals(secondArg.getName())) {
+                return new OperationImpl(
+                        OperationType.MULTIPLICATION,
+                        firstArgument,
+                        new VariableWorker(secondArg).work()
+                );
             } else {
                 return new OperationImpl(OperationType.MULTIPLICATION, firstArgument, secondArgument);
             }

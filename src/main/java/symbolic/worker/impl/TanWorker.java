@@ -23,10 +23,21 @@ public class TanWorker extends AbstractWorker {
             if (firstArg.isValueSet()) {
                 Apfloat argument = new Apfloat(firstArg.getValue());
                 return new Variable(new BigDecimal(ApfloatMath.tan(argument).doubleValue()));
+            } else {
+                return new OperationImpl(
+                        OperationType.MULTIPLICATION,
+                        new Variable(-1),
+                        new OperationImpl(
+                                OperationType.LOG,
+                                new OperationImpl(
+                                        OperationType.COS,
+                                        new Variable(firstArg.getName())
+                                )
+                        )
+                );
             }
         } else {
             return new OperationImpl(OperationType.TAN, firstArgument);
         }
-        throw new RuntimeException("Something went terribly wrong");
     }
 }

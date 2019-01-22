@@ -11,8 +11,7 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public Expression visit(Expression expression) {
-        Resolver resolver = new Resolver();
-        return expression.isOperation() ? visit((Operation) expression) : resolver.resolveVariable((Variable) expression);
+        return expression.isOperation() ? visit((Operation) expression) : expression;
     }
 
     @Override
