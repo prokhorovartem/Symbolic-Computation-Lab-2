@@ -9,23 +9,23 @@ import symbolic.model.impl.Variable;
 
 import java.math.BigDecimal;
 
-public class ExpWorker extends AbstractWorker {
-    public ExpWorker(Expression firstArgument) {
+public class LogWorker extends AbstractWorker {
+    public LogWorker(Expression firstArgument) {
         super(firstArgument);
     }
 
     @Override
     public Expression work() {
         if (firstArgument.isOperation()) {
-            throw new UnsupportedOperationException("Exp of functions");
+            throw new UnsupportedOperationException("Log of functions");
         } else if (firstArgument.isVariable()) {
             Variable firstArg = (Variable) firstArgument;
             if (firstArg.isValueSet()) {
                 Apfloat argument = new Apfloat(firstArg.getValue());
-                return new Variable(new BigDecimal(ApfloatMath.exp(argument).doubleValue()));
+                return new Variable(new BigDecimal(ApfloatMath.log(argument).doubleValue()));
             }
         } else {
-            return new OperationImpl(OperationType.EXP, firstArgument);
+            return new OperationImpl(OperationType.LOG, firstArgument);
         }
         throw new RuntimeException("Something went terribly wrong");
     }

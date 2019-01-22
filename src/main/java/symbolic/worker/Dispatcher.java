@@ -27,6 +27,9 @@ public class Dispatcher {
             case EXP:
                 worker = new ExpWorker(firstArgument);
                 break;
+            case LOG:
+                worker = new LogWorker(firstArgument);
+                break;
             default:
                 throw new UnsupportedOperationException();
         }

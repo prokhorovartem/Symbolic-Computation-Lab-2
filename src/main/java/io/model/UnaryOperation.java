@@ -7,6 +7,7 @@ public enum UnaryOperation implements InputExpression {
     COS,
     TAN,
     EXP,
+    LOG,
     INT;
 
     @Override
