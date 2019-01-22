@@ -78,7 +78,7 @@ public class InputModel {
                     expressions.add(BinaryOperation.ADDITION);
                 }
                 if (word.equals("-"))
-                    if (!(words.get(i - 1).matches("[\\d]+"))) {
+                    if (!(words.get(i - 1).matches("[\\d]+")) && !Objects.equals(words.get(i - 1), IntegrationParamHolder.getInstance().getName())) {
                         try {
                             expressions.add(new InputVariable(new BigDecimal(words.get(i + 1)).multiply(BigDecimal.valueOf(-1))));
                             i++;
