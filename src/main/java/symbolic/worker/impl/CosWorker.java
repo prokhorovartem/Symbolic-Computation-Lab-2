@@ -23,10 +23,14 @@ public class CosWorker extends AbstractWorker {
             if (firstArg.isValueSet()) {
                 Apfloat argument = new Apfloat(firstArg.getValue());
                 return new Variable(new BigDecimal(ApfloatMath.cos(argument).doubleValue()));
+            } else {
+                return new OperationImpl(
+                        OperationType.SIN,
+                        new Variable(firstArg.getName())
+                );
             }
         } else {
             return new OperationImpl(OperationType.COS, firstArgument);
         }
-        throw new RuntimeException("Something went terribly wrong");
     }
 }

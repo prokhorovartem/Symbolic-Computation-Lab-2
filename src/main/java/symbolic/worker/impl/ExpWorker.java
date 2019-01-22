@@ -23,10 +23,14 @@ public class ExpWorker extends AbstractWorker {
             if (firstArg.isValueSet()) {
                 Apfloat argument = new Apfloat(firstArg.getValue());
                 return new Variable(new BigDecimal(ApfloatMath.exp(argument).doubleValue()));
+            } else {
+                return new OperationImpl(
+                        OperationType.EXP,
+                        firstArgument
+                );
             }
         } else {
             return new OperationImpl(OperationType.EXP, firstArgument);
         }
-        throw new RuntimeException("Something went terribly wrong");
     }
 }

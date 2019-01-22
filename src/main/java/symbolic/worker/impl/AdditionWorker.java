@@ -4,6 +4,7 @@ import symbolic.model.Expression;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
+import symbolic.visitor.impl.IntegrationParamHolder;
 
 import java.util.Objects;
 
@@ -31,7 +32,10 @@ public class AdditionWorker extends AbstractWorker {
                         new Variable(firstArg.getName())
                 ).work();
             } else {
-                return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);
+                String name = IntegrationParamHolder.getInstance().getName();
+                firstArgument =  new VariableWorker(firstArg).work();
+                secondArgument = new VariableWorker(secondArg).work();
+                return new OperationImpl(OperationType.ADDITION,  firstArgument, secondArgument);
             }
         } else {
             return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);

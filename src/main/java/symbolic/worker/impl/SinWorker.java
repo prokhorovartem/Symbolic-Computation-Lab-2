@@ -24,10 +24,18 @@ public class SinWorker extends AbstractWorker {
             if (firstArg.isValueSet()) {
                 Apfloat argument = new Apfloat(firstArg.getValue());
                 return new Variable(new BigDecimal(ApfloatMath.sin(argument).doubleValue()));
+            } else {
+                return new OperationImpl(
+                        OperationType.MULTIPLICATION,
+                        new Variable(-1),
+                        new OperationImpl(
+                                OperationType.COS,
+                                new Variable(firstArg.getName())
+                        )
+                );
             }
         } else {
             return new OperationImpl(OperationType.SIN, firstArgument);
         }
-        throw new RuntimeException("Something went terribly wrong");
     }
 }

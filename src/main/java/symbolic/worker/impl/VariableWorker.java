@@ -4,21 +4,21 @@ import symbolic.model.Expression;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
+import symbolic.visitor.impl.IntegrationParamHolder;
 
 import java.math.BigDecimal;
 
 public class VariableWorker extends AbstractWorker {
     private final Variable variable;
-    private final String name;
 
-    public VariableWorker(Variable variable, String name) {
+    public VariableWorker(Variable variable) {
         super(variable);
         this.variable = variable;
-        this.name = name;
     }
 
     @Override
     public Expression work() {
+        final String name = IntegrationParamHolder.getInstance().getName();
         if (!variable.isValueSet() && variable.getName().equals(name)) {
             return new OperationImpl(
                     OperationType.DIVISION,
