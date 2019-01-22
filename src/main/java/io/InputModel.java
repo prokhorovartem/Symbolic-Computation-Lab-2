@@ -5,6 +5,7 @@ import io.model.Bracket;
 import io.model.InputExpression;
 import io.model.UnaryOperation;
 import io.model.impl.InputVariable;
+import symbolic.visitor.impl.IntegrationParamHolder;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -32,7 +33,7 @@ public class InputModel {
                         nextLine = sc.nextLine();
                         sb.append(nextLine);
                     }
-                    integral = sb.toString().replaceAll("[,$]*", "").replace("dx", "");
+                    integral = findIntegrationParam(sb);
                     break;
                 } else if (!sc.hasNext()) System.out.println("Интеграл не найден");
             }
@@ -42,6 +43,15 @@ public class InputModel {
             System.out.println("Выражение написано неправильно");
         }
         return createListOfOperationsAndOperands(integral);
+    }
+
+    private String findIntegrationParam(StringBuilder integral) {
+        String[] chars = integral.toString().split(" ");
+        char[] diff = chars[chars.length - 1].toCharArray();
+        if (diff[0] == 'd'){
+            IntegrationParamHolder.getInstance().setName(String.valueOf(diff[1]));
+        } else IntegrationParamHolder.getInstance().setName("x");
+        return integral.toString().replace(chars[chars.length - 1], "").replaceAll("[$]*", "");
     }
 
     private List<InputExpression> createListOfOperationsAndOperands(String integral) {

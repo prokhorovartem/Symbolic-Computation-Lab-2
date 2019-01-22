@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <operation operationType="ADDITION">
-    <firstArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="variable">
-        <name>x</name>
-    </firstArgument>
-    <secondArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation" operationType="DIVISION">
+    <firstArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation" operationType="DIVISION">
         <firstArgument xsi:type="operation" operationType="POW">
             <firstArgument xsi:type="variable">
                 <name>x</name>
@@ -15,5 +12,8 @@
         <secondArgument xsi:type="variable">
             <value>2</value>
         </secondArgument>
+    </firstArgument>
+    <secondArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="variable">
+        <name>x</name>
     </secondArgument>
 </operation>

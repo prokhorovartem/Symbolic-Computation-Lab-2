@@ -4,7 +4,6 @@ import io.OutputModel;
 import io.Resource;
 import io.model.InputExpression;
 import symbolic.model.Expression;
-import symbolic.visitor.impl.IntegrationParamHolder;
 import symbolic.visitor.impl.Resolver;
 
 import java.util.List;
@@ -22,7 +21,6 @@ public class Application {
             Expression expression = converter.convert(inputData);
 
             Resolver resolver = new Resolver();
-            IntegrationParamHolder.getInstance().setName("x");
             Expression resolvedExpression = resolver.resolveExpression(expression);
 
             OutputModel outputModel = new OutputModel(outputResource);
