@@ -19,7 +19,7 @@ public class VariableWorker extends AbstractWorker {
     @Override
     public Expression work() {
         final String name = IntegrationParamHolder.getInstance().getName();
-        if (!variable.isValueSet() && variable.getName().equals(name)) {
+        if (!variable.isValueSet() && name.equals(variable.getName())) {
             return new OperationImpl(
                     OperationType.DIVISION,
                     new OperationImpl(
@@ -32,10 +32,16 @@ public class VariableWorker extends AbstractWorker {
         } else {
             if (BigDecimal.ONE.equals(variable.getValue())) {
                 return new Variable(name);
-            } else {
+            } else if (variable.isValueSet()) {
                 return new OperationImpl(
                         OperationType.MULTIPLICATION,
                         new Variable(variable.getValue()),
+                        new Variable(name)
+                );
+            } else {
+                return new OperationImpl(
+                        OperationType.MULTIPLICATION,
+                        new Variable(variable.getName()),
                         new Variable(name)
                 );
             }
