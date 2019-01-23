@@ -105,8 +105,12 @@ public class InputModel {
                                 List<String> context = createListOfOperationsAndOperands(delayedString, false);
                                 listOfOperationsAndOperands.addAll(i, context);
                             }
-                        } else if (context.containsKey(listOfOperationsAndOperands.get(i)))
-                            listOfOperationsAndOperands.set(i, context.get(listOfOperationsAndOperands.get(i)));
+                        } else if (context.containsKey(listOfOperationsAndOperands.get(i))) {
+                            String delayedString = context.get(listOfOperationsAndOperands.get(i));
+                            List<String> context = createListOfOperationsAndOperands(delayedString, false);
+                            listOfOperationsAndOperands.remove(i);
+                            listOfOperationsAndOperands.addAll(i, context);
+                        }
                         else if (context.containsKey(listOfOperationsAndOperands.get(i)))
                             listOfOperationsAndOperands.set(i, context.get(listOfOperationsAndOperands.get(i)));
                 }
