@@ -9,10 +9,7 @@ import symbolic.model.Operation;
 import symbolic.model.OperationType;
 import symbolic.visitor.Visitor;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 @Getter
 @Builder
@@ -24,9 +21,9 @@ public class OperationImpl implements Operation {
     @XmlAttribute
     private OperationType operationType;
     @NonNull
-    @XmlElement
+    @XmlAnyElement
     private Expression firstArgument;
-    @XmlElement
+    @XmlAnyElement
     private Expression secondArgument;
 
     public OperationImpl(@NonNull OperationType operationType, @NonNull Expression firstArgument) {
