@@ -42,6 +42,8 @@ public class Converter {
         List<InputExpression> expressionStack = new ArrayList<>(), expressionsOut = new ArrayList<>();
         for (InputExpression data : inputData) {
             currentExpression = data;
+            if (currentExpression == UnaryOperation.INT)
+                continue;
             if (currentExpression instanceof UnaryOperation) {
                 unaryExpression = currentExpression;
             } else if (isBinaryOperation(currentExpression)) {

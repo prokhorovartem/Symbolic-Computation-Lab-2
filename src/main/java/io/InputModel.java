@@ -16,15 +16,41 @@ import java.util.regex.Pattern;
 public class InputModel {
     private Resource resource;
 
+    private Map<String, String> context = new HashMap<>();
+
     public InputModel(Resource resource) {
         this.resource = resource;
     }
 
     public List<InputExpression> parse() {
         String integral = null;
+
         try (Scanner sc = new Scanner(resource.getFile())) {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
+                if (line.contains("\\delayed")) {
+                    StringBuilder sb = new StringBuilder();
+                    String[] stringWithoutSpace = line.trim().split(" ");
+                    String[] split = stringWithoutSpace[1].split("=");
+                    Pattern pattern = Pattern.compile("[-+*/^]");
+                    Matcher matcher = pattern.matcher(split[1]);
+                    List<String> operators = new ArrayList<>();
+                    while (matcher.find()) {
+                        operators.add(matcher.group());
+                    }
+                    String[] operands = split[1].split("[-+*/^]");
+                    if (operators.size() > 0) {
+                        for (int i = 0; i < operands.length; i++) {
+                            if (context.containsKey(operands[i]))
+                                sb.append(context.get(operands[i]));
+                            else sb.append(operands[i]);
+                            if (i != operands.length - 1)
+                                sb.append(operators.get(i));
+                        }
+                        context.put(split[0], sb.toString());
+                    } else
+                        context.put(split[0], split[1]);
+                }
                 if (line.contains("$\\int")) {
                     StringBuilder sb = new StringBuilder();
                     sb.append(line);
@@ -42,7 +68,7 @@ public class InputModel {
         } catch (NoSuchElementException e) {
             System.out.println("Выражение написано неправильно");
         }
-        return createListOfOperationsAndOperands(integral);
+        return checkForContext(integral);
     }
 
     private String findIntegrationParam(StringBuilder integral) {
@@ -54,15 +80,53 @@ public class InputModel {
         return integral.toString().replace(chars[chars.length - 1], "").replaceAll("[$]*", "");
     }
 
-    private List<InputExpression> createListOfOperationsAndOperands(String integral) {
+    private List<InputExpression> checkForContext(String integral) {
+        List<String> listOfOperationsAndOperands = createListOfOperationsAndOperands(integral, true);
+        for (int i = 0; i < listOfOperationsAndOperands.size(); i++) {
+            if (listOfOperationsAndOperands.get(i).matches("[\\d]+")
+                    || listOfOperationsAndOperands.get(i).matches("[-+*/^]")) {
+                continue;
+            }
+            if (listOfOperationsAndOperands.get(i).matches("[\\w]+"))
+                try {
+                    UnaryOperation.valueOf(listOfOperationsAndOperands.get(i).toUpperCase());
+                } catch (Exception e) {
+                    if (i != listOfOperationsAndOperands.size() - 1)
+                        if (Objects.equals(listOfOperationsAndOperands.get(i + 1), "(")) {
+                            StringBuilder sb = new StringBuilder();
+                            while (!Objects.equals(listOfOperationsAndOperands.get(i), ")")) {
+                                sb.append(listOfOperationsAndOperands.get(i));
+                                listOfOperationsAndOperands.remove(i);
+                            }
+                            sb.append(listOfOperationsAndOperands.get(i));
+                            listOfOperationsAndOperands.remove(i);
+                            if (context.containsKey(sb.toString())) {
+                                String delayedString = context.get(sb.toString());
+                                List<String> context = createListOfOperationsAndOperands(delayedString, false);
+                                listOfOperationsAndOperands.addAll(i, context);
+                            }
+                        } else if (context.containsKey(listOfOperationsAndOperands.get(i)))
+                            listOfOperationsAndOperands.set(i, context.get(listOfOperationsAndOperands.get(i)));
+                        else if (context.containsKey(listOfOperationsAndOperands.get(i)))
+                            listOfOperationsAndOperands.set(i, context.get(listOfOperationsAndOperands.get(i)));
+                }
+        }
+        return convertStringToExpression(listOfOperationsAndOperands);
+
+    }
+
+    private List<String> createListOfOperationsAndOperands(String delayedString, boolean isFirst) {
         Pattern pattern = Pattern.compile("[\\d]+|[-+*/^]|[\\w]+|[()]");
-        Matcher matcher = pattern.matcher(integral);
+        Matcher matcher = pattern.matcher(delayedString);
         List<String> words = new ArrayList<>();
+        if (!isFirst)
+            words.add("(");
         while (matcher.find()) {
             words.add(matcher.group());
         }
-        return convertStringToExpression(words);
-
+        if (!isFirst)
+            words.add(")");
+        return words;
     }
 
     private List<InputExpression> convertStringToExpression(List<String> words) {
