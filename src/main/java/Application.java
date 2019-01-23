@@ -13,21 +13,18 @@ public class Application {
         Resource inputResource = new Resource(args[0]);
         Resource outputResource = new Resource(args[1]);
 
-        try {
-            InputModel inputModel = new InputModel(inputResource);
-            List<InputExpression> inputData = inputModel.parse();
+        InputModel inputModel = new InputModel(inputResource);
+        List<InputExpression> inputData = inputModel.parse();
 
-            Converter converter = new Converter();
-            Expression expression = converter.convert(inputData);
+        Converter converter = new Converter();
+        Expression expression = converter.convert(inputData);
 
-            Resolver resolver = new Resolver();
-            Expression resolvedExpression = resolver.resolveExpression(expression);
+        Resolver resolver = new Resolver();
+        Expression resolvedExpression = resolver.resolveExpression(expression);
 
-            OutputModel outputModel = new OutputModel(outputResource);
-            outputModel.printResult(resolvedExpression);
+        OutputModel outputModel = new OutputModel(outputResource);
+        outputModel.printResult(resolvedExpression);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }

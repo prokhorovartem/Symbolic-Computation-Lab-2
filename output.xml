@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<operation operationType="SUBTRACTION">
+    <firstArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation" operationType="MULTIPLICATION">
+        <firstArgument xsi:type="variable">
+            <value>2</value>
+        </firstArgument>
+        <secondArgument xsi:type="operation" operationType="DIVISION">
+            <firstArgument xsi:type="operation" operationType="POW">
+                <firstArgument xsi:type="variable">
+                    <name>z</name>
+                </firstArgument>
+                <secondArgument xsi:type="variable">
+                    <value>2</value>
+                </secondArgument>
+            </firstArgument>
+            <secondArgument xsi:type="variable">
+                <value>2</value>
+            </secondArgument>
+        </secondArgument>
+    </firstArgument>
+    <secondArgument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="operation" operationType="MULTIPLICATION">
+        <firstArgument xsi:type="variable">
+            <value>3</value>
+        </firstArgument>
+        <secondArgument xsi:type="operation" operationType="DIVISION">
+            <firstArgument xsi:type="operation" operationType="POW">
+                <firstArgument xsi:type="variable">
+                    <name>z</name>
+                </firstArgument>
+                <secondArgument xsi:type="variable">
+                    <value>3</value>
+                </secondArgument>
+            </firstArgument>
+            <secondArgument xsi:type="variable">
+                <value>3</value>
+            </secondArgument>
+        </secondArgument>
+    </secondArgument>
+</operation>
