@@ -1,6 +1,9 @@
 package io;
 
-import io.model.*;
+import io.model.BinaryOperation;
+import io.model.Bracket;
+import io.model.InputExpression;
+import io.model.UnaryOperation;
 import io.model.impl.InputVariable;
 import io.visitor.impl.ArgumentConvertVisitorImpl;
 import symbolic.model.Expression;

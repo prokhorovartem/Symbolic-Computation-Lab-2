@@ -1,5 +1,6 @@
 package symbolic.model.impl;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,10 @@ public class Variable implements Expression {
 
     public Variable(String name) {
         this.name = name;
+    }
+
+    public Variable(double value) {
+        this.value = BigDecimal.valueOf(value);
     }
 
     @Override

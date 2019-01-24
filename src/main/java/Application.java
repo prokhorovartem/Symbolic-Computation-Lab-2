@@ -8,18 +8,26 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import symbolic.model.Expression;
-import symbolic.visitor.impl.Resolver;
+import symbolic.model.impl.Variable;
+import symbolic.visitor.Resolver;
+import symbolic.visitor.calculation.CalculationParamHolder;
+import symbolic.visitor.calculation.CalculationResolver;
+import symbolic.visitor.integration.IntegrationParamHolder;
+import symbolic.visitor.integration.IntegrationResolver;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Application extends javafx.application.Application {
+
+    private static Expression resolvedExpression;
+
     public static void main(String[] args) {
         Resource inputResource = new Resource(args[0]);
         Resource outputResource = new Resource(args[1]);
@@ -30,8 +38,8 @@ public class Application extends javafx.application.Application {
         Converter converter = new Converter();
         Expression expression = converter.convert(inputData);
 
-        Resolver resolver = new Resolver();
-        Expression resolvedExpression = resolver.resolveExpression(expression);
+        Resolver resolver = new IntegrationResolver();
+        resolvedExpression = resolver.resolveExpression(expression);
 
         OutputModel outputModel = new OutputModel(outputResource);
         outputModel.printResult(resolvedExpression);
@@ -88,8 +96,17 @@ public class Application extends javafx.application.Application {
 
     private void initData(XYChart.Series series1, double leftBorder, double rightBorder) {
         series1.getData().remove(0, series1.getData().size());
+
+        CalculationParamHolder.getInstance().setName(IntegrationParamHolder.getInstance().getName());
+        Resolver resolver = new CalculationResolver();
         for (double i = leftBorder; i < rightBorder; i += 0.05) {
-            series1.getData().add(new XYChart.Data(i, Math.sin(i)));
+            try {
+                CalculationParamHolder.getInstance().setValue(BigDecimal.valueOf(i));
+                Variable variable = (Variable) resolver.resolveExpression(resolvedExpression);
+                series1.getData().add(new XYChart.Data(i, variable.getValue().doubleValue()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

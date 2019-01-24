@@ -1,13 +1,13 @@
-package symbolic.visitor.impl;
+package symbolic.visitor.integration;
 
 import symbolic.model.Expression;
 import symbolic.model.Operation;
 import symbolic.model.OperationType;
-import symbolic.model.impl.Variable;
+import symbolic.visitor.Resolver;
 import symbolic.visitor.Visitor;
-import symbolic.worker.Dispatcher;
+import symbolic.worker.integration.Dispatcher;
 
-public class VisitorImpl implements Visitor {
+public class IntegrationVisitor implements Visitor {
 
     @Override
     public Expression visit(Expression expression) {
@@ -17,7 +17,7 @@ public class VisitorImpl implements Visitor {
     @Override
     public Expression visit(Operation operation) {
         Dispatcher dispatcher = new Dispatcher();
-        Resolver resolver = new Resolver();
+        Resolver resolver = new IntegrationResolver();
         if (OperationType.POW.equals(operation.getOperationType()) && operation.getFirstArgument().isVariable()) {
             return dispatcher.resolveOperation(operation.getOperationType(), operation.getFirstArgument(), operation.getSecondArgument());
         } else {

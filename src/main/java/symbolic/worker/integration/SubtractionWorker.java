@@ -1,4 +1,4 @@
-package symbolic.worker.impl;
+package symbolic.worker.integration;
 
 import symbolic.model.Expression;
 import symbolic.model.OperationType;
@@ -7,12 +7,12 @@ import symbolic.model.impl.Variable;
 
 import java.util.Objects;
 
-public class AdditionWorker extends AbstractWorker {
-    public AdditionWorker(Expression firstArgument, Expression secondArgument) {
+public class SubtractionWorker extends AbstractWorker {
+    public SubtractionWorker(Expression firstArgument, Expression secondArgument) {
         super(firstArgument, secondArgument);
     }
 
-    public AdditionWorker(Expression firstArgument) {
+    public SubtractionWorker(Expression firstArgument) {
         throw new UnsupportedOperationException();
     }
 
@@ -22,19 +22,16 @@ public class AdditionWorker extends AbstractWorker {
             Variable firstArg = (Variable) firstArgument;
             Variable secondArg = (Variable) secondArgument;
             if (firstArg.isValueSet() && secondArg.isValueSet()) {
-                return new Variable(firstArg.getValue().add(secondArg.getValue()));
+                return new Variable(firstArg.getValue().subtract(secondArg.getValue()));
             } else if (Objects.equals(firstArg.getName(), secondArg.getName())) {
-                return new MultiplicationWorker(
-                        new Variable(2),
-                        new Variable(firstArg.getName())
-                ).work();
+                return new Variable(0);
             } else {
                 firstArgument = new VariableWorker(firstArg).work();
                 secondArgument = new VariableWorker(secondArg).work();
-                return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);
+                return new OperationImpl(OperationType.SUBTRACTION, firstArgument, secondArgument);
             }
         } else {
-            return new OperationImpl(OperationType.ADDITION, firstArgument, secondArgument);
+            return new OperationImpl(OperationType.SUBTRACTION, firstArgument, secondArgument);
         }
     }
 }

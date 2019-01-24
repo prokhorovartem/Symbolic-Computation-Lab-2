@@ -1,11 +1,10 @@
-package symbolic.worker.impl;
+package symbolic.worker.integration;
 
 import symbolic.model.Expression;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
-import symbolic.visitor.impl.IntegrationParamHolder;
-import symbolic.visitor.impl.Resolver;
+import symbolic.visitor.integration.IntegrationParamHolder;
 
 public class PowerWorker extends AbstractWorker {
     public PowerWorker(Expression firstArgument, Expression secondArgument) {

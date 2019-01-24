@@ -1,8 +1,9 @@
-package symbolic.worker;
+package symbolic.worker.integration;
 
 import symbolic.model.Expression;
 import symbolic.model.OperationType;
-import symbolic.worker.impl.*;
+import symbolic.worker.Worker;
+import symbolic.worker.integration.*;
 
 public class Dispatcher {
 

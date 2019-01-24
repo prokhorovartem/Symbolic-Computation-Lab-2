@@ -5,7 +5,7 @@ import io.model.Bracket;
 import io.model.InputExpression;
 import io.model.UnaryOperation;
 import io.model.impl.InputVariable;
-import symbolic.visitor.impl.IntegrationParamHolder;
+import symbolic.visitor.integration.IntegrationParamHolder;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -110,8 +110,7 @@ public class InputModel {
                             List<String> context = createListOfOperationsAndOperands(delayedString, false);
                             listOfOperationsAndOperands.remove(i);
                             listOfOperationsAndOperands.addAll(i, context);
-                        }
-                        else if (context.containsKey(listOfOperationsAndOperands.get(i)))
+                        } else if (context.containsKey(listOfOperationsAndOperands.get(i)))
                             listOfOperationsAndOperands.set(i, context.get(listOfOperationsAndOperands.get(i)));
                 }
         }

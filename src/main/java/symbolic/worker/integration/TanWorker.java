@@ -1,4 +1,4 @@
-package symbolic.worker.impl;
+package symbolic.worker.integration;
 
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
@@ -9,36 +9,35 @@ import symbolic.model.impl.Variable;
 
 import java.math.BigDecimal;
 
-public class LogWorker extends AbstractWorker {
-    public LogWorker(Expression firstArgument) {
+public class TanWorker extends AbstractWorker {
+    public TanWorker(Expression firstArgument) {
         super(firstArgument);
     }
 
     @Override
     public Expression work() {
         if (firstArgument.isOperation()) {
-            throw new UnsupportedOperationException("Log of functions");
+            throw new UnsupportedOperationException("Tan of functions");
         } else if (firstArgument.isVariable()) {
             Variable firstArg = (Variable) firstArgument;
             if (firstArg.isValueSet()) {
                 Apfloat argument = new Apfloat(firstArg.getValue());
-                return new Variable(new BigDecimal(ApfloatMath.log(argument).doubleValue()));
+                return new Variable(new BigDecimal(ApfloatMath.tan(argument).doubleValue()));
             } else {
                 return new OperationImpl(
                         OperationType.MULTIPLICATION,
-                        new Variable(firstArg.getName()),
+                        new Variable(-1),
                         new OperationImpl(
-                                OperationType.SUBTRACTION,
+                                OperationType.LOG,
                                 new OperationImpl(
-                                        OperationType.LOG,
-                                        firstArgument
-                                ),
-                                new Variable(1)
+                                        OperationType.COS,
+                                        new Variable(firstArg.getName())
+                                )
                         )
                 );
             }
         } else {
-            return new OperationImpl(OperationType.LOG, firstArgument);
+            return new OperationImpl(OperationType.TAN, firstArgument);
         }
     }
 }

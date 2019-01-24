@@ -1,4 +1,4 @@
-package symbolic.worker.impl;
+package symbolic.worker.integration;
 
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;

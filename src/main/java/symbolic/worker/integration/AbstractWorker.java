@@ -1,4 +1,4 @@
-package symbolic.worker.impl;
+package symbolic.worker.integration;
 
 import lombok.NonNull;
 import symbolic.model.Expression;

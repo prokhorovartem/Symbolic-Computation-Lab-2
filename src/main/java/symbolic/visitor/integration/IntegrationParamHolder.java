@@ -1,4 +1,4 @@
-package symbolic.visitor.impl;
+package symbolic.visitor.integration;
 
 public class IntegrationParamHolder {
     private String name = "";

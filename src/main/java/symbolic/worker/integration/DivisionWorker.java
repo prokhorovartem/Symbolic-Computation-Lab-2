@@ -1,11 +1,11 @@
-package symbolic.worker.impl;
+package symbolic.worker.integration;
 
 import org.apfloat.Apfloat;
 import symbolic.model.Expression;
 import symbolic.model.OperationType;
 import symbolic.model.impl.OperationImpl;
 import symbolic.model.impl.Variable;
-import symbolic.visitor.impl.IntegrationParamHolder;
+import symbolic.visitor.integration.IntegrationParamHolder;
 
 import java.math.BigDecimal;
 import java.util.Objects;
