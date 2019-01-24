@@ -1,11 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<operation operationType="ADDITION">
-    <operation operationType="MULTIPLICATION">
-        <variable name="f()"/>
-        <variable name="x"/>
-    </operation>
-    <operation operationType="MULTIPLICATION">
-        <variable name="a"/>
-        <variable name="x"/>
-    </operation>
-</operation>
+<variable value="7"/>

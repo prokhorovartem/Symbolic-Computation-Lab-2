@@ -173,7 +173,7 @@ public class InputModel {
     }
 
     private List<String> createListOfOperationsAndOperands(String delayedString, boolean isFirst) {
-        Pattern pattern = Pattern.compile("[\\d]+|[-+*/^]|[\\w]+|[()]");
+        Pattern pattern = Pattern.compile("[\\d]+|[-+*/^]|[\\w]+|[()]|[,]");
         Matcher matcher = pattern.matcher(delayedString);
         List<String> words = new ArrayList<>();
         if (!isFirst)
