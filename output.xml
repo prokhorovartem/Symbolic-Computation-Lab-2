@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <operation operationType="ADDITION">
     <operation operationType="MULTIPLICATION">
-        <variable value="8"/>
+        <variable name="f()"/>
         <variable name="x"/>
     </operation>
-    <operation operationType="DIVISION">
-        <operation operationType="POW">
-            <variable name="x"/>
-            <variable value="2"/>
-        </operation>
-        <variable value="2"/>
+    <operation operationType="MULTIPLICATION">
+        <variable name="a"/>
+        <variable name="x"/>
     </operation>
 </operation>

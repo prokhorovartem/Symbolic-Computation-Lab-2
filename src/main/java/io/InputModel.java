@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class InputModel {
     private Resource resource;
 
-    private Map<String, String> context = new HashMap<>();
+    private Map<Template, String> context = new HashMap<>();
 
     public InputModel(Resource resource) {
         this.resource = resource;
@@ -29,27 +29,42 @@ public class InputModel {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 if (line.contains("\\delayed")) {
-                    StringBuilder sb = new StringBuilder();
-                    String[] stringWithoutSpace = line.trim().split(" ");
-                    String[] split = stringWithoutSpace[1].split("=");
+                    StringBuilder nameOfFunction = new StringBuilder();
+                    StringBuilder operandsOfFunctionInLeft = new StringBuilder();
+                    StringBuilder operandsOfFunctionInRight = new StringBuilder();
+                    List<String> stringWithoutSpace = Arrays.asList(line.trim().split(" "));
+                    List<String> leftAndRight = Arrays.asList(stringWithoutSpace.get(1).split("="));
+                    char[] charsOfLeftSide = leftAndRight.get(0).toCharArray();
+                    for (int i = 0; i < charsOfLeftSide.length; i++) {
+                        if (charsOfLeftSide[i] == '(') {
+                            while (charsOfLeftSide[i + 1] != ')') {
+                                operandsOfFunctionInLeft.append(charsOfLeftSide[i + 1]);
+                                i++;
+                            }
+                            break;
+                        } else nameOfFunction.append(charsOfLeftSide[i]);
+                    }
+                    String[] split = operandsOfFunctionInLeft.toString().split(",");
+                    List<String> operandsOfFunction = Arrays.asList(split);
+                    Template template = new Template(nameOfFunction.toString(), operandsOfFunction);
                     Pattern pattern = Pattern.compile("[-+*/^]");
-                    Matcher matcher = pattern.matcher(split[1]);
+                    Matcher matcher = pattern.matcher(leftAndRight.get(1));
                     List<String> operators = new ArrayList<>();
                     while (matcher.find()) {
                         operators.add(matcher.group());
                     }
-                    String[] operands = split[1].split("[-+*/^]");
+                    String[] operands = leftAndRight.get(1).split("[-+*/^]");
                     if (operators.size() > 0) {
                         for (int i = 0; i < operands.length; i++) {
-                            if (context.containsKey(operands[i]))
-                                sb.append(context.get(operands[i]));
-                            else sb.append(operands[i]);
+                            if (context.containsKey(new Template(operands[i], null)))
+                                operandsOfFunctionInRight.append(context.get(new Template(operands[i], null)));
+                            else operandsOfFunctionInRight.append(operands[i]);
                             if (i != operands.length - 1)
-                                sb.append(operators.get(i));
+                                operandsOfFunctionInRight.append(operators.get(i));
                         }
-                        context.put(split[0], sb.toString());
+                        context.put(template, operandsOfFunctionInRight.toString());
                     } else
-                        context.put(split[0], split[1]);
+                        context.put(template, leftAndRight.get(1));
                 }
                 if (line.contains("$\\int")) {
                     StringBuilder sb = new StringBuilder();
@@ -91,27 +106,66 @@ public class InputModel {
                 try {
                     UnaryOperation.valueOf(listOfOperationsAndOperands.get(i).toUpperCase());
                 } catch (Exception e) {
-                    if (i != listOfOperationsAndOperands.size() - 1)
+                    if (i != listOfOperationsAndOperands.size() - 1) {
                         if (Objects.equals(listOfOperationsAndOperands.get(i + 1), "(")) {
-                            StringBuilder sb = new StringBuilder();
-                            while (!Objects.equals(listOfOperationsAndOperands.get(i), ")")) {
-                                sb.append(listOfOperationsAndOperands.get(i));
+                            StringBuilder function = new StringBuilder();
+                            StringBuilder operands = new StringBuilder();
+                            function.append(listOfOperationsAndOperands.get(i));
+                            if (context.containsKey(new Template(function.toString(), null))) {
+                                Set<Map.Entry<Template, String>> entrySet = context.entrySet();
+                                String desiredObject = context.get(new Template(function.toString(), null));
+                                List<String> arguments = new ArrayList<>();
+                                for (Map.Entry<Template, String> pair : entrySet) {
+                                    if (desiredObject.equals(pair.getValue())) {
+                                        arguments = pair.getKey().getArguments();
+                                        break;
+                                    }
+                                }
+                                Map<String, String> argumentsAndValues = new HashMap<>();
                                 listOfOperationsAndOperands.remove(i);
-                            }
-                            sb.append(listOfOperationsAndOperands.get(i));
-                            listOfOperationsAndOperands.remove(i);
-                            if (context.containsKey(sb.toString())) {
-                                String delayedString = context.get(sb.toString());
-                                List<String> context = createListOfOperationsAndOperands(delayedString, false);
+                                listOfOperationsAndOperands.remove(i);
+                                while (!Objects.equals(listOfOperationsAndOperands.get(i), ")")) {
+                                    operands.append(listOfOperationsAndOperands.get(i));
+                                    listOfOperationsAndOperands.remove(i);
+                                }
+                                listOfOperationsAndOperands.remove(i);
+                                String[] operandsArray = operands.toString().split(",");
+                                for (int j = 0; j < arguments.size(); j++) {
+                                    argumentsAndValues.put(arguments.get(j), operandsArray[j]);
+                                }
+                                String delayedString = context.get(new Template(function.toString(), null));
+                                Pattern pattern = Pattern.compile("[\\d]+|[-+*/^]|[\\w]+|[()]");
+                                Matcher matcher = pattern.matcher(delayedString);
+                                List<String> words = new ArrayList<>();
+                                while (matcher.find()) {
+                                    words.add(matcher.group());
+                                }
+                                for (int j = 0; j < words.size(); j++) {
+                                    if (argumentsAndValues.containsKey(words.get(j))) {
+                                        words.set(j, argumentsAndValues.get(words.get(j)));
+                                    }
+                                }
+                                String string = String.join("", words);
+                                List<String> context = createListOfOperationsAndOperands(string, false);
                                 listOfOperationsAndOperands.addAll(i, context);
+                            } else {
+                                while (!Objects.equals(listOfOperationsAndOperands.get(i), ")")) {
+                                    function.append(listOfOperationsAndOperands.get(i));
+                                    listOfOperationsAndOperands.remove(i);
+                                }
                             }
-                        } else if (context.containsKey(listOfOperationsAndOperands.get(i))) {
-                            String delayedString = context.get(listOfOperationsAndOperands.get(i));
+                        } else if (context.containsKey(new Template(listOfOperationsAndOperands.get(i), null))) {
+                            String delayedString = context.get(new Template(listOfOperationsAndOperands.get(i), null));
                             List<String> context = createListOfOperationsAndOperands(delayedString, false);
                             listOfOperationsAndOperands.remove(i);
                             listOfOperationsAndOperands.addAll(i, context);
-                        } else if (context.containsKey(listOfOperationsAndOperands.get(i)))
-                            listOfOperationsAndOperands.set(i, context.get(listOfOperationsAndOperands.get(i)));
+                        }
+                    } else if (context.containsKey(new Template(listOfOperationsAndOperands.get(i), null))) {
+                        String delayedString = context.get(new Template(listOfOperationsAndOperands.get(i), null));
+                        List<String> context = createListOfOperationsAndOperands(delayedString, false);
+                        listOfOperationsAndOperands.remove(i);
+                        listOfOperationsAndOperands.addAll(i, context);
+                    }
                 }
         }
         return convertStringToExpression(listOfOperationsAndOperands);
