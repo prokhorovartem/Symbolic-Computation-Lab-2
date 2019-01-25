@@ -9,8 +9,6 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import symbolic.model.Expression;
@@ -75,19 +73,10 @@ public class Application extends javafx.application.Application {
             }
         });
 
-        VBox vBox1 = new VBox();
-        vBox1.getChildren().addAll(lineChart1);
-
-        HBox chartBox = new HBox();
-        chartBox.getChildren().addAll(vBox1);
-
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(leftBorderTextField, rightBorderTextField, btn, chartBox);
+        vBox.getChildren().addAll(lineChart1, leftBorderTextField, rightBorderTextField, btn);
 
-        StackPane root = new StackPane();
-        root.getChildren().add(vBox);
-
-        Scene scene = new Scene(root, 505, 550);
+        Scene scene = new Scene(vBox, 505, 535);
 
         primaryStage.setTitle("Symbolic Computation, Lab4");
         primaryStage.setScene(scene);

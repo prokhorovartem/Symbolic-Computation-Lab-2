@@ -2,7 +2,7 @@
 <operation operationType="DIVISION">
     <operation operationType="POW">
         <variable name="x"/>
-        <variable value="5.0"/>
+        <variable value="3.0"/>
     </operation>
-    <variable value="5.0"/>
+    <variable value="3.0"/>
 </operation>
