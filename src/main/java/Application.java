@@ -99,7 +99,7 @@ public class Application extends javafx.application.Application {
 
         CalculationParamHolder.getInstance().setName(IntegrationParamHolder.getInstance().getName());
         Resolver resolver = new CalculationResolver();
-        for (double i = leftBorder; i < rightBorder; i += 0.05) {
+        for (double i = leftBorder; i < rightBorder + 0.05; i += 0.05) {
             try {
                 CalculationParamHolder.getInstance().setValue(BigDecimal.valueOf(i));
                 Variable variable = (Variable) resolver.resolveExpression(resolvedExpression);

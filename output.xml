@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<variable value="7"/>
+<operation operationType="DIVISION">
+    <operation operationType="POW">
+        <variable name="x"/>
+        <variable value="5.0"/>
+    </operation>
+    <variable value="5.0"/>
+</operation>
