@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<operation operationType="DIVISION">
+<operation xmlns="http://www.example.com"
+           operationType="DIVISION">
     <operation operationType="POW">
         <variable name="x"/>
         <variable value="3.0"/>

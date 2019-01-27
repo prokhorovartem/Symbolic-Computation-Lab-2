@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema elementFormDefault="qualified"
-           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.example.com"
+           xmlns:tns="http://www.example.com">
     <xs:complexType name="operation">
-        <xs:sequence>
-            <xs:choice maxOccurs="2">
-                <xs:element name="variable" type="variable"/>
-                <xs:element name="operation" type="operation"/>
-            </xs:choice>
-        </xs:sequence>
+        <xs:choice maxOccurs="2">
+            <xs:element name="variable" type="tns:variable"/>
+            <xs:element name="operation" type="tns:operation"/>
+        </xs:choice>
         <xs:attribute name="operationType" type="xs:string"/>
     </xs:complexType>
     <xs:complexType name="variable">
-        <xs:attribute type="xs:byte" name="value"/>
+        <xs:attribute type="xs:double" name="value"/>
         <xs:attribute type="xs:string" name="name"/>
     </xs:complexType>
-    <xs:element name="operation" type="operation"/>
+    <xs:element name="operation" type="tns:operation"/>
 </xs:schema>
